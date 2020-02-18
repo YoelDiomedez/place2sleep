@@ -60,4 +60,5 @@ mix.styles([
     
 // Font Icons
 mix.copyDirectory('public/assets/global/plugins/font-awesome/fonts', 'public/fonts')
-    .copyDirectory('public/assets/global/plugins/simple-line-icons/fonts', 'public/fonts');
+    .copyDirectory('public/assets/global/plugins/simple-line-icons/fonts', 'public/fonts')
+    .copyDirectory('public/assets/global/plugins/bootstrap/fonts', 'public/fonts');
