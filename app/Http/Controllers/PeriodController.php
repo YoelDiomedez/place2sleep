@@ -20,9 +20,8 @@ class PeriodController extends Controller
             return datatables()->eloquent(
                  Period::query()
             )
-            ->addColumn('btnEdit', "<button id='btnEditPeriod' class='btn yellow btn-outline'><i class='fa fa-edit'></i></button>")
-            ->addColumn('btnDelete', "<button id='btnDeletePeriod' class='btn red btn-outline'><i class='fa fa-trash'></i></button>")
-            ->rawColumns(['btnEdit', 'btnDelete'])
+            ->addColumn('buttons', 'periods.buttons.option')
+            ->rawColumns(['buttons'])
             ->toJson();
         }
         

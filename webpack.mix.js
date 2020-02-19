@@ -44,7 +44,8 @@ mix.styles([
         'public/assets/global/css/plugins.min.css',
         'public/assets/layouts/layout2/css/layout.min.css',
         'public/assets/layouts/layout2/css/themes/blue.min.css',
-        'public/assets/layouts/layout2/css/custom.min.css'
+        'public/assets/layouts/layout2/css/custom.min.css',
+        'public/assets/global/plugins/bootstrap-toastr/toastr.min.css'
     ], 'public/css/main.css')
     .scripts([
         'public/assets/global/plugins/jquery.min.js',
@@ -55,7 +56,8 @@ mix.styles([
         'public/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js',
         'public/assets/global/scripts/app.min.js',
         'public/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js',
-        'public/assets/layouts/layout2/scripts/layout.min.js'
+        'public/assets/layouts/layout2/scripts/layout.min.js',
+        'public/assets/global/plugins/bootstrap-toastr/toastr.min.js'
     ], 'public/js/main.js');
     
 // Font Icons
