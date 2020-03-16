@@ -10,21 +10,22 @@ class CemeteryController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        if($request->ajax()){
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+            return datatables()->eloquent(
+                Cemetery::query()
+           )
+           ->addColumn('buttons', 'cemeteries.buttons.option')
+           ->rawColumns(['buttons'])
+           ->toJson();
+        }
+        
+        return view('cemeteries.index');
     }
 
     /**
@@ -35,29 +36,12 @@ class CemeteryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $cemetery = new Cemetery;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Cemetery  $cemetery
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Cemetery $cemetery)
-    {
-        //
-    }
+        $cemetery->appellation = $request->appellation;
+        $cemetery->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Cemetery  $cemetery
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Cemetery $cemetery)
-    {
-        //
+        return $cemetery;
     }
 
     /**
@@ -69,7 +53,10 @@ class CemeteryController extends Controller
      */
     public function update(Request $request, Cemetery $cemetery)
     {
-        //
+        $cemetery->appellation = $request->appellation;
+        $cemetery->update();
+
+        return $cemetery;
     }
 
     /**
@@ -80,6 +67,8 @@ class CemeteryController extends Controller
      */
     public function destroy(Cemetery $cemetery)
     {
-        //
+        $cemetery->delete();
+
+        return $cemetery;
     }
 }

@@ -9,7 +9,7 @@
             <li class="dropdown dropdown-user">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                     <img src="{{ asset('assets/layouts/layout2/img/default-user-circle.png') }}" class="img-circle" alt="">  
-                    <span class="username username-hide-on-mobile">
+                    <span class="username">
                         {{ Auth::user()->name }}
                     </span>
                     <i class="fa fa-angle-down"></i>

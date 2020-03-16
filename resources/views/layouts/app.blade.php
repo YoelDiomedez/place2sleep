@@ -24,7 +24,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Metronic Admin Template" name="description" />
+        <meta content="Place 2 Sleep" name="description" />
         <meta content="Yoel Diomedez" name="author" />
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         @section('styles')
@@ -106,7 +106,11 @@ License: You must have a valid license purchased only from themeforest(the above
         <script>
             function toastrMessage(type, message) {
 
-                toastr.options.positionClass = 'toast-top-center'
+                toastr.options = {
+                    closeButton: true,
+                    newestOnTop: true,
+                    positionClass: 'toast-top-center'
+                }
 
                 switch (type) {
                     case 'info':
