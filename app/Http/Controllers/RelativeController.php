@@ -10,21 +10,22 @@ class RelativeController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        if($request->ajax()){
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+            return datatables()->eloquent(
+                Relative::query()
+           )
+           ->addColumn('buttons', 'relatives.buttons.option')
+           ->rawColumns(['buttons'])
+           ->toJson();
+        }
+        
+        return view('relatives.index');
     }
 
     /**
@@ -35,29 +36,18 @@ class RelativeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $relative = new Relative;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Relative  $relative
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Relative $relative)
-    {
-        //
-    }
+        $relative->names          = $request->names; 
+        $relative->surnames       = $request->surnames;
+        $relative->document_type  = $request->document_type;
+        $relative->document_numb  = $request->document_numb;
+        $relative->cellphone_numb = $request->cellphone_numb;
+        $relative->address        = $request->address;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Relative  $relative
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Relative $relative)
-    {
-        //
+        $relative->save();
+
+        return $relative;
     }
 
     /**
@@ -69,7 +59,16 @@ class RelativeController extends Controller
      */
     public function update(Request $request, Relative $relative)
     {
-        //
+        $relative->names          = $request->names; 
+        $relative->surnames       = $request->surnames;
+        $relative->document_type  = $request->document_type;
+        $relative->document_numb  = $request->document_numb;
+        $relative->cellphone_numb = $request->cellphone_numb;
+        $relative->address        = $request->address;
+
+        $relative->update();
+
+        return $relative;
     }
 
     /**
@@ -80,6 +79,8 @@ class RelativeController extends Controller
      */
     public function destroy(Relative $relative)
     {
-        //
+        $relative->delete();
+
+        return $relative;
     }
 }
