@@ -130,6 +130,13 @@ License: You must have a valid license purchased only from themeforest(the above
                         break;
                 }
             }
+
+            function loading(button, option){
+                if (option == 'start')
+                    $(button).button('loading')
+                else if (option == 'stop')
+                    $(button).button('reset')
+            }
         </script>
         @stack('scripts')
     </body>

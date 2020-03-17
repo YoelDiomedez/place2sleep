@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::apiResource('/period', 'PeriodController')->except(['show']);
 Route::apiResource('/cemetery', 'CemeteryController')->except(['show']);
+Route::apiResource('/deceased', 'DeceasedController')->except(['show']);

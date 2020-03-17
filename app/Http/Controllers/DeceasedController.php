@@ -10,21 +10,22 @@ class DeceasedController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        if($request->ajax()){
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+            return datatables()->eloquent(
+                Deceased::query()
+           )
+           ->addColumn('buttons', 'deceaseds.buttons.option')
+           ->rawColumns(['buttons'])
+           ->toJson();
+        }
+        
+        return view('deceaseds.index');
     }
 
     /**
@@ -35,29 +36,21 @@ class DeceasedController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $deceased = new Deceased;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Deceased  $deceased
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Deceased $deceased)
-    {
-        //
-    }
+        $deceased->names          = $request->names; 
+        $deceased->surnames       = $request->surnames;
+        $deceased->gender         = $request->gender;
+        $deceased->marital_status = $request->marital_status;
+        $deceased->document_type  = $request->document_type;
+        $deceased->document_numb  = $request->document_numb;
+        $deceased->birth_date     = $request->birth_date;
+        $deceased->death_date     = $request->death_date;
+        $deceased->country_origin = $request->country_origin;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Deceased  $deceased
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Deceased $deceased)
-    {
-        //
+        $deceased->save();
+
+        return $deceased;
     }
 
     /**
@@ -69,7 +62,19 @@ class DeceasedController extends Controller
      */
     public function update(Request $request, Deceased $deceased)
     {
-        //
+        $deceased->names          = $request->names; 
+        $deceased->surnames       = $request->surnames;
+        $deceased->gender         = $request->gender;
+        $deceased->marital_status = $request->marital_status;
+        $deceased->document_type  = $request->document_type;
+        $deceased->document_numb  = $request->document_numb;
+        $deceased->birth_date     = $request->birth_date;
+        $deceased->death_date     = $request->death_date;
+        $deceased->country_origin = $request->country_origin;
+
+        $deceased->update();
+
+        return $deceased;
     }
 
     /**
@@ -80,6 +85,8 @@ class DeceasedController extends Controller
      */
     public function destroy(Deceased $deceased)
     {
-        //
+        $deceased->delete();
+
+        return $deceased;
     }
 }
