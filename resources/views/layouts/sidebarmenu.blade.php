@@ -32,22 +32,59 @@
                 <ul class="sub-menu">
                     <li class="nav-item start {{ request()->is('home') ? 'active open' : '' }}">
                         <a href="{{ route('home') }}" class="nav-link ">
-                            <span class="title">Home</span>
+                            <span class="title">Inicio</span>
                         </a>
                     </li>
                 </ul>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item
+                {{    
+                    request()->is('period') ||
+                    request()->is('cemetery') ||
+                    request()->is('deceased') ||
+                    request()->is('relative') ||
+                    request()->is('price')
+                    ? 'active open' : '' 
+                }}">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-settings"></i>
                     <span class="title">System</span>
                     <span class="arrow"></span>
+                    <span class="arrow 
+                    {{   
+                        request()->is('period') ||
+                        request()->is('cemetery') ||
+                        request()->is('deceased') ||
+                        request()->is('relative') ||
+                        request()->is('price')
+                         ? 'open' : '' 
+                    }}">
                 </a>
-                <ul class="sub-menu">
-                    <li class="nav-item">
-                        <a href="javascript:;" class="nav-link ">
-                            <span class="title">Users</span>
+                <ul class="sub-menu">  
+                    <li class="nav-item {{ request()->is('price') ? 'active open' : '' }}">
+                        <a href="{{ route('price.index') }}" class="nav-link">
+                            <span class="title">Precios</span>
+                        </a>
+                    </li>              
+                    <li class="nav-item {{ request()->is('deceased') ? 'active open' : '' }}">
+                        <a href="{{ route('deceased.index') }}" class="nav-link">
+                            <span class="title">Difuntos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->is('period') ? 'active open' : '' }}">
+                        <a href="{{ route('period.index') }}" class="nav-link">
+                            <span class="title">Periodos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->is('relative') ? 'active open' : '' }}">
+                        <a href="{{ route('relative.index') }}" class="nav-link">
+                            <span class="title">Familiares</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->is('cemetery') ? 'active open' : '' }}">
+                        <a href="{{ route('cemetery.index') }}" class="nav-link">
+                            <span class="title">Cementerios</span>
                         </a>
                     </li>
                 </ul>
