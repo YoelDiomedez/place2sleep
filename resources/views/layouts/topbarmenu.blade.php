@@ -16,6 +16,17 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-default">
                     <li>
+                        <a href="javascript:;">
+                            <i class="icon-direction"></i> {{ auth()->user()->cemetery_appellation }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('choice') }}">
+                            <i class="icon-refresh"></i> Cementerios
+                        </a>
+                    </li>
+                    <li class="divider"> </li>
+                    <li>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                             <i class="icon-logout"></i> Salir 

@@ -39,7 +39,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN LOGO -->
         <div class="logo">
             <a href="{{ url('/') }}">
-                <img src="{{ asset('assets/pages/img/logo-big.png') }}" alt="" /> 
+                <img src="{{ asset('img/logo-big.png') }}" alt="" /> 
             </a>
         </div>
         <!-- END LOGO -->
@@ -50,7 +50,7 @@ License: You must have a valid license purchased only from themeforest(the above
             
         </div>
         <div class="copyright"> 
-            &copy; {{ date('Y') }} 
+            &copy; {{ date('Y') }} Yoel Diomedez Apps
         </div>
         <!--[if lt IE 9]>
         <script src="{{ asset('assets/global/plugins/respond.min.js') }}"></script>

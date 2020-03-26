@@ -18,6 +18,8 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/choice', 'HomeController@choice')->name('choice');
+Route::get('/select/{id}', 'HomeController@select')->name('select');
 
 Route::apiResource('/period', 'PeriodController')->except(['show']);
 Route::apiResource('/cemetery', 'CemeteryController')->except(['show']);

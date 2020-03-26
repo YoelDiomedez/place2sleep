@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PeriodsTableSeeder::class);
         $this->call(CemeteriesTableSeeder::class);
         factory(App\Price::class, 200)->create();
+        $this->call(UserTableSeeder::class);
     }
 }

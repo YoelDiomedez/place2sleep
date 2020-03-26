@@ -36,4 +36,27 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function cemeteries()
+    {
+        return $this->belongsToMany(Cemetery::class, 'users_cemeteries');
+    }
+    
+    public function getCemeteryIdAttribute()
+    {
+        if (session()->has('cemetery_id')) {
+            return session()->get('cemetery_id');
+        }
+
+        return null;
+    }
+
+    public function getCemeteryAppellationAttribute()
+    {
+        if (session()->has('cemetery_appellation')) {
+            return session()->get('cemetery_appellation');
+        }
+
+        return null;
+    }
 }

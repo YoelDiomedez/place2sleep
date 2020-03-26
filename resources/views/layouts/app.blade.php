@@ -43,7 +43,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
                     <a href="{{ url('/') }}">
-                        <img src="{{ asset('assets/layouts/layout2/img/logo-default.png') }}" alt="logo" class="logo-default" /> 
+                        <img src="{{ asset('img/logo-default.png') }}" alt="logo" class="logo-default" /> 
                     </a>
                     <div class="menu-toggler sidebar-toggler">
                         <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
@@ -89,7 +89,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN FOOTER -->
         <div class="page-footer">
             <div class="page-footer-inner"> 
-                &copy; {{ date('Y') }}           
+                &copy; {{ date('Y') }} Yoel Diomedez Apps       
             </div>
             <div class="scroll-to-top">
                 <i class="icon-arrow-up"></i>

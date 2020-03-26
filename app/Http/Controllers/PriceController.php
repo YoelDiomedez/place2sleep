@@ -23,7 +23,7 @@ class PriceController extends Controller
             if ($year) {
                 return datatables()->eloquent(
                     Price::where('period_id', $period->id)
-                        ->where('cemetery_id', 1) // must change to auth()->cemetery->id
+                        ->where('cemetery_id', auth()->user()->cemetery_id)
                 )
                 ->addColumn('buttons', 'prices.buttons.option')
                 ->rawColumns(['buttons'])
@@ -53,7 +53,7 @@ class PriceController extends Controller
         $price = new Price;
 
         $price->period_id   = $request->period_id;
-        $price->cemetery_id = 1; // must change to auth()->cemetery->id
+        $price->cemetery_id = auth()->user()->cemetery_id;
         $price->concept     = $request->concept;
         $price->amount      = $request->amount;
 
