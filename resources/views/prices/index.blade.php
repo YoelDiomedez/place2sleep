@@ -9,7 +9,7 @@
 @extends('layouts.app')
 
 @section('pagetitle', 'Precios')
-@section('pagesubtitle', '')
+@section('pagesubtitle', auth()->user()->cemetery_appellation.date(' Y'))
 
 @section('content')
 <div class="page-bar">

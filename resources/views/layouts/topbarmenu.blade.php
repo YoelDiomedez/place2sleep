@@ -16,7 +16,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-default">
                     <li>
-                        <a href="javascript:;">
+                        <a href="javascript:;" style="cursor: default;">
                             <i class="icon-direction"></i> {{ auth()->user()->cemetery_appellation }}
                         </a>
                     </li>
