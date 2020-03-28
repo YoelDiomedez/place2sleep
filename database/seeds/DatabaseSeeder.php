@@ -17,5 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CemeteriesTableSeeder::class);
         factory(App\Price::class, 200)->create();
         $this->call(UserTableSeeder::class);
+        factory(App\Pavilion::class, 200)->create();
+        factory(App\Niche::class, 100)->create();
+        factory(App\Mausoleum::class, 100)->create();
     }
 }
