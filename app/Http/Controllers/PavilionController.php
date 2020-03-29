@@ -10,23 +10,23 @@ class PavilionController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        if ( $request->ajax() ) {
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+            return datatables()->eloquent(
+                Pavilion::where('cemetery_id', auth()->user()->cemetery_id)
+            )
+            ->addColumn('buttons', 'pavilions.buttons.option')
+            ->rawColumns(['buttons'])
+            ->toJson();
+        }
+        
+        return view('pavilions.index');
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -35,29 +35,15 @@ class PavilionController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $pavilion = new Pavilion;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Pavilion  $pavilion
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pavilion $pavilion)
-    {
-        //
-    }
+        $pavilion->cemetery_id = auth()->user()->cemetery_id;
+        $pavilion->type        = $request->type;
+        $pavilion->name        = $request->name;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Pavilion  $pavilion
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pavilion $pavilion)
-    {
-        //
+        $pavilion->save();
+
+        return $pavilion;
     }
 
     /**
@@ -69,7 +55,12 @@ class PavilionController extends Controller
      */
     public function update(Request $request, Pavilion $pavilion)
     {
-        //
+        $pavilion->type = $request->type;
+        $pavilion->name = $request->name;
+
+        $pavilion->update();
+
+        return $pavilion;
     }
 
     /**
@@ -80,6 +71,29 @@ class PavilionController extends Controller
      */
     public function destroy(Pavilion $pavilion)
     {
-        //
+        $pavilion->delete();
+
+        return $pavilion;
+    }
+    
+    /**
+    * Display a listing of the resource API.
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function get(Request  $request)
+    {
+        $term = $request->term;
+
+        $data = Pavilion::select('id', 'name', 'type', 'cemetery_id')
+                        ->where('cemetery_id', auth()->user()->cemetery_id)
+                        ->where('type', $request->type)
+                        ->where('name', 'LIKE', '%'.$term.'%')
+                        ->paginate(10);
+
+        $data->appends(['term' => $term]);
+
+        return $data;
     }
 }

@@ -89,7 +89,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN FOOTER -->
         <div class="page-footer">
             <div class="page-footer-inner"> 
-                &copy; {{ date('Y') }} Yoel Diomedez Apps       
+                © {{ date('Y') }} Yoel Diomedez Apps       
             </div>
             <div class="scroll-to-top">
                 <i class="icon-arrow-up"></i>

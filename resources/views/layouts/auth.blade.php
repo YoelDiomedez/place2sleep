@@ -50,7 +50,7 @@ License: You must have a valid license purchased only from themeforest(the above
             
         </div>
         <div class="copyright"> 
-            &copy; {{ date('Y') }} Yoel Diomedez Apps
+            © {{ date('Y') }} Yoel Diomedez Apps
         </div>
         <!--[if lt IE 9]>
         <script src="{{ asset('assets/global/plugins/respond.min.js') }}"></script>
