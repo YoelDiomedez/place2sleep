@@ -4,9 +4,15 @@ Place 2 Sleep - Sistema para la Administración de Cementerios
 
 ## Características
 
-**Módulo Inhumaciones**
+**Módulo Cementerio**
 - [x] Nichos
+      - [X] Inhumaciones
+      - [X] Pagos
 - [x] Mausoleos
+      - [X] Inhumaciones
+      - [X] Pagos
+- [x] Pabellones
+- [x] Exhumaciones
 
 **Módulo Administración**
 - [x] Difuntos
@@ -15,7 +21,6 @@ Place 2 Sleep - Sistema para la Administración de Cementerios
 
 **Módulo Sistema**
 - [x] Users
-- [x] Backups
 - [x] Auditing
 
 ## Requirements
