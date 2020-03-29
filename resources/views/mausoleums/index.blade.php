@@ -11,7 +11,7 @@
 
 @extends('layouts.app')
 
-@section('pagetitle', 'Nichos')
+@section('pagetitle', 'Mausoleos')
 @section('pagesubtitle', auth()->user()->cemetery_appellation)
 
 @section('content')
@@ -19,7 +19,7 @@
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
-            <a href="JavaScript:;" id="reloadNicheDT">@yield('pagetitle')</a>
+            <a href="JavaScript:;" id="reloadMausoleumDT">@yield('pagetitle')</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
@@ -35,7 +35,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-xs-offset-4 col-sm-2 col-sm-offset-0 col-md-2 col-md-offset-0 col-lg-2 col-lg-offset-0">
                         <div class="form-group">
-                            <button id="newNicheBtn" class="btn btn-outline blue">
+                            <button id="newMausoleumBtn" class="btn btn-outline blue">
                                 <i class="fa fa-plus"></i> Agregar
                             </button>
                         </div>
@@ -50,15 +50,17 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <table id="nicheDataTable" class="table table-hover table-bordered table-condensed">
+                <table id="mausoleumDataTable" class="table table-hover table-bordered table-condensed">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Estado</th>
                             <th>Pabellón</th>
-                            <th>Categoria</th>
-                            <th>Fila</th>
-                            <th>Columna</th>
+                            <th>Nombre</th>
+                            <th>Ubicación</th>
+                            <th>Doc. Ref.</th>
+                            <th>Disponibilidad</th>
+                            <th>Extensiones</th>
+                            <th>Capacidad</th>
                             <th>Precio</th>
                             <th>Opciones</th>
                         </tr>
@@ -69,9 +71,9 @@
     </div>
 </div>
 
-@include('niches.create')
-@include('niches.edit')
-@include('niches.delete')
+@include('mausoleums.create')
+@include('mausoleums.edit')
+@include('mausoleums.delete')
 
 @endsection
 
@@ -89,65 +91,73 @@
         /**************************************************************************/
         /* Lista - Read
         /**************************************************************************/
-        var nicheDataTable = setUpDataTable(
-            '#nicheDataTable',
-            'Lista de Nichos',
-            [ 0, 1, 2, 3, 4, 5, 6],
+        var mausoleumDataTable = setUpDataTable(
+            '#mausoleumDataTable',
+            'Lista de Mausoleos',
+            [ 0, 1, 2, 3, 4, 7, 8],
             [
                 {
-                    targets: [1, 3],
+                    targets: [5, 6, 7],
                     searchable: false
+                },
+                {
+                    targets: [4],
+                    visible: false
                 }
             ],
             [
                 {data: 'id', name: 'id'},
-                {data: 'state', name: 'state', render: function ( data, type, row ) {
-                        return formatStateLabel(row.state);
-                }},
                 {data: 'pavilion.name', name: 'pavilion.name'},
-                {data: 'category', name: 'category'},
-                {data: 'row_x', name: 'row_x'},
-                {data: 'col_y', name: 'col_y'},
+                {data: 'name', name: 'name'},
+                {data: 'location', name: 'location'},
+                {data: 'reference_doc', name: 'reference_doc'},
+                {data: 'availability', name: 'availability'},
+                {data: 'extensions', name: 'extensions'},
+                {data: 'size', name: 'size'},
                 {data: 'price', name: 'price'},
                 {data: 'buttons', orderable: false, className: "text-center btn-actions"},
             ]
         )
 
-        $('#nicheDataTable').removeClass('no-footer')
+        $('#mausoleumDataTable').removeClass('no-footer')
         $.fn.dataTable.ext.errMode = 'throw'
 
-        $('#reloadNicheDT').click( function () {
+        $('#reloadMausoleumDT').click( function () {
 
-            $('#nicheDataTable').DataTable().destroy()
+            $('#mausoleumDataTable').DataTable().destroy()
 
-            nicheDataTable = setUpDataTable(
-                '#nicheDataTable',
-                'Lista de Nichos',
-                [ 0, 1, 2, 3, 4, 5, 6],
+            mausoleumDataTable = setUpDataTable(
+                '#mausoleumDataTable',
+                'Lista de Mausoleos',
+                [ 0, 1, 2, 3, 4, 7, 8],
                 [
                     {
-                        targets: [1, 3],
+                        targets: [5, 6, 7],
                         searchable: false
+                    },
+                    {
+                        targets: [4],
+                        visible: false
                     }
                 ],
                 [
                     {data: 'id', name: 'id'},
-                    {data: 'state', name: 'state', render: function ( data, type, row ) {
-                            return formatStateLabel(row.state);
-                    }},
                     {data: 'pavilion.name', name: 'pavilion.name'},
-                    {data: 'category', name: 'category'},
-                    {data: 'row_x', name: 'row_x'},
-                    {data: 'col_y', name: 'col_y'},
+                    {data: 'name', name: 'name'},
+                    {data: 'location', name: 'location'},
+                    {data: 'reference_doc', name: 'reference_doc'},
+                    {data: 'availability', name: 'availability'},
+                    {data: 'extensions', name: 'extensions'},
+                    {data: 'size', name: 'size'},
                     {data: 'price', name: 'price'},
                     {data: 'buttons', orderable: false, className: "text-center btn-actions"},
                 ]
             )
 
-            $('#nicheDataTable').removeClass('no-footer')
+            $('#mausoleumDataTable').removeClass('no-footer')
         })
 
-        // Filtro Nichos por Pabellon
+        // Filtro de Mausoleos por Pabellon
         $('#pavilionFilter').empty()
 
         getPavilions('#pavilionFilter', 'N')
@@ -159,27 +169,31 @@
             
             // console.log(pavilion_id)
 
-            $('#nicheDataTable').DataTable().destroy()
+            $('#mausoleumDataTable').DataTable().destroy()
 
-            nicheDataTable = setUpDataTable(
-                '#nicheDataTable',
-                'Lista de Nichos',
-                [ 0, 1, 2, 3, 4, 5, 6],
+            mausoleumDataTable = setUpDataTable(
+                '#mausoleumDataTable',
+                'Lista de Mausoleos',
+                [ 0, 1, 2, 3, 4, 7, 8],
                 [
                     {
-                        targets: [1, 3],
+                        targets: [5, 6, 7],
                         searchable: false
+                    },
+                    {
+                        targets: [4],
+                        visible: false
                     }
                 ],
                 [
                     {data: 'id', name: 'id'},
-                    {data: 'state', name: 'state', render: function ( data, type, row ) {
-                            return formatStateLabel(row.state);
-                    }},
                     {data: 'pavilion.name', name: 'pavilion.name'},
-                    {data: 'category', name: 'category'},
-                    {data: 'row_x', name: 'row_x'},
-                    {data: 'col_y', name: 'col_y'},
+                    {data: 'name', name: 'name'},
+                    {data: 'location', name: 'location'},
+                    {data: 'reference_doc', name: 'reference_doc'},
+                    {data: 'availability', name: 'availability'},
+                    {data: 'extensions', name: 'extensions'},
+                    {data: 'size', name: 'size'},
                     {data: 'price', name: 'price'},
                     {data: 'buttons', orderable: false, className: "text-center btn-actions"},
                 ],
@@ -187,64 +201,64 @@
                     pavilion_id: pavilion_id
                 }
             )
-            
-            $('#nicheDataTable').removeClass('no-footer')
+
+            $('#mausoleumDataTable').removeClass('no-footer')
         })
         /*************************************************************************/
         /* Agregar - Create
         /*************************************************************************/
-        $('#newNicheBtn').click( function () {
+        $('#newMausoleumBtn').click( function () {
             $('#newPavilion').empty()
-            getPavilions('#newPavilion', 'N', true)
-            setUpFormModal('#newNicheForm', '#newNicheModal', 'show')
+            getPavilions('#newPavilion', 'M', true)
+            setUpFormModal('#newMausoleumForm', '#newMausoleumModal', 'show')
         })
 
-        $('#newNicheForm').submit( function(event) {
+        $('#newMausoleumForm').submit( function(event) {
             event.preventDefault()
-            addNiche('#newNicheForm', '#newNicheModal', nicheDataTable)
+            addMausoleum('#newMausoleumForm', '#newMausoleumModal', mausoleumDataTable)
         })
 
         /*************************************************************************/
         /* Editar - Update
         /*************************************************************************/
-        $('#nicheDataTable tbody').on('click', '#editNicheBtn', function(){
-            let data = nicheDataTable.row($(this).parents('tr')).data()
+        $('#mausoleumDataTable tbody').on('click', '#editMausoleumBtn', function(){
+            let data = mausoleumDataTable.row($(this).parents('tr')).data()
             $('#editPavilion').empty()
-            getPavilions('#editPavilion', 'N', true)
+            getPavilions('#editPavilion', 'M', true)
             selectPavilion('#editPavilion', data)
-            setUpFormModal('#updateNicheForm', '#updateNicheModal', 'show', data)
+            setUpFormModal('#updateMausoleumForm', '#updateMausoleumModal', 'show', data)
         })
 
-        $('#updateNicheForm').submit( function(event) {
+        $('#updateMausoleumForm').submit( function(event) {
             event.preventDefault()
-            updateNiche(
+            updateMausoleum(
                 $('#update').val(),
-                '#updateNicheForm',
-                '#updateNicheModal',
-                nicheDataTable
+                '#updateMausoleumForm',
+                '#updateMausoleumModal',
+                mausoleumDataTable
             )
         })
 
         /**************************************************************************/
         /* Eliminar - Delete
         /**************************************************************************/
-        $('#nicheDataTable tbody').on('click', '#deleteNicheBtn', function(){
-            let data = nicheDataTable.row($(this).parents('tr')).data()
-            setUpFormModal('#deleteNicheForm', '#deleteNicheModal', 'show', data)
+        $('#mausoleumDataTable tbody').on('click', '#deleteMausoleumBtn', function(){
+            let data = mausoleumDataTable.row($(this).parents('tr')).data()
+            setUpFormModal('#deleteMausoleumForm', '#deleteMausoleumModal', 'show', data)
         })
 
-        $('#deleteNicheForm').submit( function(event) {
+        $('#deleteMausoleumForm').submit( function(event) {
             event.preventDefault()
-            deleteNiche(
+            deleteMausoleum(
                 $('#delete').val(),
-                '#deleteNicheForm',
-                '#deleteNicheModal',
-                nicheDataTable
+                '#deleteMausoleumForm',
+                '#deleteMausoleumModal',
+                mausoleumDataTable
             )
         })
     })
 
-    const url = "{{ url('niche') }}"
+    const url = "{{ url('mausoleum') }}"
 
     function setUpDataTable(id, exportTitle, exportColumns, columnDefs, columns, params = {}) {
         let dataTable = $(id).DataTable({
@@ -313,136 +327,21 @@
             $('#update').val(data.id)
             $('#delete').val(data.id)
             
-            $('#col_y').val(data.col_y)
+            $('#name').val(data.name)
+            $('#location').val(data.location)
+            $('#reference_doc').val(data.reference_doc)
+            $('#extensions').val(data.extensions)
+            $('#size').val(data.size)
             $('#price').val(data.price)
+            $('#created_at').val(data.created_at)
 
-            switch (data.category) {
-                case 'Adulto':
-                    document.getElementById('category').selectedIndex = '1'
-                    break;
-                case 'Parvulo':
-                    document.getElementById('category').selectedIndex = '2'
-                    break;
-                case 'Osario':
-                    document.getElementById('category').selectedIndex = '3'
-                    break;
-                case 'Dorado':
-                    document.getElementById('category').selectedIndex = '4'
-                    break;
-                default:
-                    document.getElementById('category').selectedIndex = '5'
-                    break;
-            }
-
-            switch (data.state) {
-                case 'Disponible':
-                    document.getElementById('state').selectedIndex = '1'
-                    break;
-                case 'Tramite':
-                    document.getElementById('state').selectedIndex = '2'
-                    break;
-                case 'Ocupado':
-                    document.getElementById('state').selectedIndex = '3'
-                    break;
-                case 'Reservado':
-                    document.getElementById('state').selectedIndex = '4'
-                    break;
-                default:
-                    document.getElementById('state').selectedIndex = '5'
-                    break;
-            }
-
-            switch (data.row_x) {
-                case 'A':
-                    document.getElementById('row_x').selectedIndex = '1'
-                    break;
-                case 'B':
-                    document.getElementById('row_x').selectedIndex = '2'
-                    break;
-                case 'C':
-                    document.getElementById('row_x').selectedIndex = '3'
-                    break;
-                case 'D':
-                    document.getElementById('row_x').selectedIndex = '4'
-                    break;
-                case 'E':
-                    document.getElementById('row_x').selectedIndex = '5'
-                    break;
-                case 'F':
-                    document.getElementById('row_x').selectedIndex = '6'
-                    break;
-                case 'G':
-                    document.getElementById('row_x').selectedIndex = '7'
-                    break;
-                case 'H':
-                    document.getElementById('row_x').selectedIndex = '8'
-                    break;
-                case 'I':
-                    document.getElementById('row_x').selectedIndex = '9'
-                    break;
-                case 'J':
-                    document.getElementById('row_x').selectedIndex = '10'
-                    break;
-                case 'K':
-                    document.getElementById('row_x').selectedIndex = '11'
-                    break;
-                case 'L':
-                    document.getElementById('row_x').selectedIndex = '12'
-                    break;
-                case 'M':
-                    document.getElementById('row_x').selectedIndex = '13'
-                    break;
-                case 'N':
-                    document.getElementById('row_x').selectedIndex = '14'
-                    break;
-                case 'O':
-                    document.getElementById('row_x').selectedIndex = '15'
-                    break;
-                case 'P':
-                    document.getElementById('row_x').selectedIndex = '16'
-                    break;
-                case 'Q':
-                    document.getElementById('row_x').selectedIndex = '17'
-                    break;
-                case 'R':
-                    document.getElementById('row_x').selectedIndex = '18'
-                    break;
-                case 'S':
-                    document.getElementById('row_x').selectedIndex = '19'
-                    break;
-                case 'T':
-                    document.getElementById('row_x').selectedIndex = '20'
-                    break;
-                case 'U':
-                    document.getElementById('row_x').selectedIndex = '21'
-                    break;
-                case 'V':
-                    document.getElementById('row_x').selectedIndex = '22'
-                    break;
-                case 'W':
-                    document.getElementById('row_x').selectedIndex = '23'
-                    break;
-                case 'X':
-                    document.getElementById('row_x').selectedIndex = '24'
-                    break;
-                case 'Y':
-                    document.getElementById('row_x').selectedIndex = '25'
-                    break;
-                case 'Z':
-                    document.getElementById('row_x').selectedIndex = '26'
-                    break;
-                default:
-                    document.getElementById('row_x').selectedIndex = '0'
-                    break;
-            }
-
-            $('p').text(data.row_x +' '+ data.col_y +' - '+ data.pavilion.name)
+            $('p').text(data.name +' - '+ data.pavilion.name)
         }
 
         $(modal).modal(behavior)
     }
 
-    function addNiche(form, modal, dataTable) {
+    function addMausoleum(form, modal, dataTable) {
 
         loading('#registrar', 'start')
 
@@ -456,18 +355,18 @@
 
                 dataTable.ajax.reload()
 
-                toastrMessage('success', 'Nicho Registrado')
+                toastrMessage('success', 'Mausoleo Registrado')
                 loading('#registrar', 'stop')
             },
             error: function(xhr, status) {
                 // console.log(xhr.responseJSON.message)
-                toastrMessage(status, 'El Nicho no pudo ser Registrado')
+                toastrMessage(status, 'El Mausoleo no pudo ser Registrado')
                 loading('#registrar', 'stop')
             }
         })
     }
 
-    function updateNiche(id, form, modal, dataTable) {
+    function updateMausoleum(id, form, modal, dataTable) {
 
         loading('#actualizar', 'start')
 
@@ -479,27 +378,29 @@
                 // console.log(data)
                 setUpFormModal(form, modal, 'hide')
 
-                let row = $('#nicheDataTable').dataTable().fnFindCellRowIndexes(id, 0)
+                let row = $('#mausoleumDataTable').dataTable().fnFindCellRowIndexes(id, 0)
 
-                dataTable.cell(row, 1).data(formatStateLabel(data.state)).draw(false)
-                dataTable.cell(row, 2).data(data.pavilion.name).draw(false)
-                dataTable.cell(row, 3).data(data.category).draw(false)
-                dataTable.cell(row, 4).data(data.row_x).draw(false)
-                dataTable.cell(row, 5).data(data.col_y).draw(false)
-                dataTable.cell(row, 6).data(data.price).draw(false)
+                dataTable.cell(row, 1).data(data.pavilion.name).draw(false)
+                dataTable.cell(row, 2).data(data.name).draw(false)
+                dataTable.cell(row, 3).data(data.location).draw(false)
+                dataTable.cell(row, 4).data(data.reference_doc).draw(false)
+                dataTable.cell(row, 5).data(data.availability).draw(false)
+                dataTable.cell(row, 6).data(data.extensions).draw(false)
+                dataTable.cell(row, 7).data(data.size).draw(false)
+                dataTable.cell(row, 8).data(data.price).draw(false)
 
-                toastrMessage('info', 'Nicho Actualizado')
+                toastrMessage('info', 'Mausoleo Actualizado')
                 loading('#actualizar', 'stop')
             },
             error: function(xhr, status) {
                 // console.log(xhr.responseJSON.message)
-                toastrMessage(status, 'El Nicho no pudo ser Actualizado')
+                toastrMessage(status, 'El Mausoleo no pudo ser Actualizado')
                 loading('#actualizar', 'stop')
             }
         })
     }
 
-    function deleteNiche(id, form, modal, dataTable) {
+    function deleteMausoleum(id, form, modal, dataTable) {
 
         loading('#eliminar', 'start')
 
@@ -511,43 +412,23 @@
                 //console.log(data)
                 setUpFormModal(form, modal, 'hide')
 
-                let row = $('#nicheDataTable').dataTable().fnFindCellRowIndexes(id, 0)
+                let row = $('#mausoleumDataTable').dataTable().fnFindCellRowIndexes(id, 0)
                 dataTable.row(row).remove().draw()
 
-                toastrMessage('warning', 'Nicho Eliminado')
+                toastrMessage('warning', 'Mausoleo Eliminado')
                 loading('#eliminar', 'stop')
 
             },
             error: function(xhr, status) {
                 // console.log(xhr.responseJSON.message)
-                toastrMessage(status, 'El Nicho no pudo ser Eliminado')
+                toastrMessage(status, 'El Mausoleo no pudo ser Eliminado')
                 loading('#eliminar', 'stop')
             }
         })
     }
 
-    function formatStateLabel(state){
-
-        switch (state) {
-            case 'Disponible':
-                return '<span class="label label-primary">'+state+'</span>'
-                break;
-            case 'Tramite':
-                return '<span class="label label-warning">'+state+'</span>'
-                break;
-            case 'Ocupado':
-                return '<span class="label label-danger">'+state+'</span>'
-                break;
-            case 'Reservado':
-                return '<span class="label label-success">'+state+'</span>'
-                break;
-            default:
-                return '<span class="label label-default">'+state+'</span>'
-                break;
-        }
-    }
     /*
-     * Api Functions
+     * API Functions
      */
     function getPavilions(obj, type, modal = false) {
 

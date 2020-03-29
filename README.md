@@ -9,9 +9,14 @@ Place 2 Sleep - Sistema para la Administración de Cementerios
 - [x] Mausoleos
 
 **Módulo Administración**
-- [x] Usuarios
-- [x] Auditorias
-- [x] Copias de Seguridad
+- [x] Difuntos
+- [x] Familiares
+- [x] Cementerios
+
+**Módulo Sistema**
+- [x] Users
+- [x] Backups
+- [x] Auditing
 
 ## Requirements
 
@@ -36,9 +41,9 @@ Place 2 Sleep - Sistema para la Administración de Cementerios
   MAIL_ENCRYPTION=null
   
 # Data Base Migration
-  php artisan migrate
+  php artisan migrate --seed | migrate:refesh --seed
 
 # Launch Server
-  php artisan serve
+  php artisan serve | path/app/public
   
 ```

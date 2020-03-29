@@ -40,41 +40,63 @@
 
             <li class="nav-item
                 {{    
-                    request()->is('period') ||
-                    request()->is('cemetery') ||
-                    request()->is('deceased') ||
-                    request()->is('relative') ||
-                    request()->is('price')
+                    request()->is('niche')     ||
+                    request()->is('mausoleum') ||
+                    request()->is('pavilion') 
                     ? 'active open' : '' 
                 }}">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-settings"></i>
-                    <span class="title">System</span>
-                    <span class="arrow"></span>
+                    <i class="fa fa-bank"></i>
+                    <span class="title">Cementerio</span>
                     <span class="arrow 
-                    {{   
-                        request()->is('period') ||
-                        request()->is('cemetery') ||
-                        request()->is('deceased') ||
-                        request()->is('relative') ||
-                        request()->is('price')
+                    {{  
+                        request()->is('niche')     ||
+                        request()->is('mausoleum') ||
+                        request()->is('pavilion') 
                          ? 'open' : '' 
                     }}">
                 </a>
-                <ul class="sub-menu">  
-                    <li class="nav-item {{ request()->is('price') ? 'active open' : '' }}">
-                        <a href="{{ route('price.index') }}" class="nav-link">
-                            <span class="title">Precios</span>
+                <ul class="sub-menu">
+                    <li class="nav-item {{ request()->is('niche') ? 'active open' : '' }}">
+                        <a href="{{ route('niche.index') }}" class="nav-link">
+                            <span class="title">Nichos</span>
                         </a>
-                    </li>              
+                    </li>
+                    <li class="nav-item {{ request()->is('mausoleum') ? 'active open' : '' }}">
+                        <a href="{{ route('mausoleum.index') }}" class="nav-link">
+                            <span class="title">Mausoleos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->is('pavilion') ? 'active open' : '' }}">
+                        <a href="{{ route('pavilion.index') }}" class="nav-link">
+                            <span class="title">Pabellones</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li class="nav-item
+                {{    
+                    request()->is('cemetery') ||
+                    request()->is('deceased') ||
+                    request()->is('relative')  
+                    ? 'active open' : '' 
+                }}">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-layers"></i>
+                    <span class="title">Administración</span>
+                    <span class="arrow 
+                    {{   
+                        request()->is('cemetery') ||
+                        request()->is('deceased') ||
+                        request()->is('relative') 
+                         ? 'open' : '' 
+                    }}">
+                </a>
+                <ul class="sub-menu">            
                     <li class="nav-item {{ request()->is('deceased') ? 'active open' : '' }}">
                         <a href="{{ route('deceased.index') }}" class="nav-link">
                             <span class="title">Difuntos</span>
-                        </a>
-                    </li>
-                    <li class="nav-item {{ request()->is('period') ? 'active open' : '' }}">
-                        <a href="{{ route('period.index') }}" class="nav-link">
-                            <span class="title">Periodos</span>
                         </a>
                     </li>
                     <li class="nav-item {{ request()->is('relative') ? 'active open' : '' }}">
@@ -89,7 +111,6 @@
                     </li>
                 </ul>
             </li>
-            
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>

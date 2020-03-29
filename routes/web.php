@@ -21,14 +21,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/choice', 'HomeController@choice')->name('choice');
 Route::get('/select/{id}', 'HomeController@select')->name('select');
 
-Route::apiResource('/period', 'PeriodController')->except(['show']); // delete
 Route::apiResource('/cemetery', 'CemeteryController')->except(['show']);
 Route::apiResource('/deceased', 'DeceasedController')->except(['show']);
 Route::apiResource('/relative', 'RelativeController')->except(['show']);
-Route::apiResource('/price', 'PriceController')->except(['show']); // delete
 
-Route::apiResource('/pavilion', 'PavilionController')->except(['show']);
 Route::apiResource('/niche', 'NicheController')->except(['show']);
+Route::apiResource('/pavilion', 'PavilionController')->except(['show']);
+Route::apiResource('/mausoleum', 'MausoleumController')->except(['show']);
 
 Route::prefix('api')->group(function () {
     Route::get('pavilion', 'PavilionController@get');
