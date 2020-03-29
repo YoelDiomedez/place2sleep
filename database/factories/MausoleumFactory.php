@@ -6,8 +6,13 @@ use App\Mausoleum;
 use Faker\Generator as Faker;
 
 $factory->define(Mausoleum::class, function (Faker $faker) {
+
+    $pavilions = \App\Pavilion::select('id')
+                            ->where('type', 'M')
+                            ->whereIn('cemetery_id', [1, 2])
+                            ->get();
     return [
-        'pavilion_id'   => $faker->numberBetween($min = 101, $max = 200),
+        'pavilion_id'   => $faker->unique()->randomElement($pavilions),
         'name'          => $faker->company.' '.$faker->companySuffix,
         'location'      => $faker->bothify('Mz. ? Lote ##'),
         'reference_doc' => $faker->numerify('Resolucion N° ###-'.date('Y').'-SBPP-P'),
