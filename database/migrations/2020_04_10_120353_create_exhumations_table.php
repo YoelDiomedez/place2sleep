@@ -15,11 +15,12 @@ class CreateExhumationsTable extends Migration
     {
         Schema::create('exhumations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('deceased_id'); 
-            $table->string('reference_doc');
+            $table->unsignedBigInteger('inhumation_id'); 
+            $table->string('ric')->comment('Registro de Ingreso a Caja');
+            $table->string('doc')->comment('Documento de Referencia');
             $table->text('notes');
-            $table->foreign('deceased_id')->references('id')->on('deceaseds')->onDelete('cascade');
             $table->timestamps();
+            $table->foreign('inhumation_id')->references('id')->on('inhumations')->onDelete('cascade');
         });
     }
 

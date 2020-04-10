@@ -50,8 +50,8 @@
                                 <label class="bold">Documento de Referencia</label>
                                 <input 
                                     type="text" 
-                                    name="reference_doc" 
-                                    id="reference_doc" 
+                                    name="doc" 
+                                    id="doc" 
                                     class="form-control" 
                                     maxlength="255"
                                     placeholder="RESOLUCIÓN N° ###-{{ date('Y') }}-SBPP-P"

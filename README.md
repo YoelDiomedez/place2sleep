@@ -8,6 +8,10 @@ Place 2 Sleep - Sistema para la Administración de Cementerios
 - [x] Nicho
 - [x] Mausoleo
 
+**Módulo Exhumaciones**
+- [x] Nicho
+- [x] Mausoleo
+
 **Módulo Cementerio**
 - [x] Nichos
 - [x] Mausoleos

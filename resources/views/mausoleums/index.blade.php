@@ -110,7 +110,7 @@
                 {data: 'pavilion.name', name: 'pavilion.name'},
                 {data: 'name', name: 'name'},
                 {data: 'location', name: 'location'},
-                {data: 'reference_doc', name: 'reference_doc'},
+                {data: 'doc', name: 'doc'},
                 {data: 'availability', name: 'availability'},
                 {data: 'extensions', name: 'extensions'},
                 {data: 'size', name: 'size'},
@@ -145,7 +145,7 @@
                     {data: 'pavilion.name', name: 'pavilion.name'},
                     {data: 'name', name: 'name'},
                     {data: 'location', name: 'location'},
-                    {data: 'reference_doc', name: 'reference_doc'},
+                    {data: 'doc', name: 'doc'},
                     {data: 'availability', name: 'availability'},
                     {data: 'extensions', name: 'extensions'},
                     {data: 'size', name: 'size'},
@@ -190,7 +190,7 @@
                     {data: 'pavilion.name', name: 'pavilion.name'},
                     {data: 'name', name: 'name'},
                     {data: 'location', name: 'location'},
-                    {data: 'reference_doc', name: 'reference_doc'},
+                    {data: 'doc', name: 'doc'},
                     {data: 'availability', name: 'availability'},
                     {data: 'extensions', name: 'extensions'},
                     {data: 'size', name: 'size'},
@@ -329,7 +329,7 @@
             
             $('#name').val(data.name)
             $('#location').val(data.location)
-            $('#reference_doc').val(data.reference_doc)
+            $('#doc').val(data.doc)
             $('#extensions').val(data.extensions)
             $('#size').val(data.size)
             $('#price').val(data.price)
@@ -383,7 +383,7 @@
                 dataTable.cell(row, 1).data(data.pavilion.name).draw(false)
                 dataTable.cell(row, 2).data(data.name).draw(false)
                 dataTable.cell(row, 3).data(data.location).draw(false)
-                dataTable.cell(row, 4).data(data.reference_doc).draw(false)
+                dataTable.cell(row, 4).data(data.doc).draw(false)
                 dataTable.cell(row, 5).data(data.availability).draw(false)
                 dataTable.cell(row, 6).data(data.extensions).draw(false)
                 dataTable.cell(row, 7).data(data.size).draw(false)

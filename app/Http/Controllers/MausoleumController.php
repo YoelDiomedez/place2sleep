@@ -55,7 +55,7 @@ class MausoleumController extends Controller
         $mausoleum->pavilion_id   = $request->pavilion_id;
         $mausoleum->name          = $request->name;
         $mausoleum->location      = $request->location;
-        $mausoleum->reference_doc = $request->reference_doc;
+        $mausoleum->doc           = $request->doc;
         $mausoleum->size          = $request->size;
         $mausoleum->availability  = $request->size;
         $mausoleum->extensions    = 0;
@@ -89,7 +89,7 @@ class MausoleumController extends Controller
         $mausoleum->pavilion_id   = $request->pavilion_id;
         $mausoleum->name          = $request->name;
         $mausoleum->location      = $request->location;
-        $mausoleum->reference_doc = $request->reference_doc;
+        $mausoleum->doc           = $request->doc;
         $mausoleum->availability  = $mausoleum->availability + $request->extensions;
         $mausoleum->extensions    = $mausoleum->extensions + $request->extensions;
         $mausoleum->price         = $request->price;

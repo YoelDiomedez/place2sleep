@@ -133,4 +133,61 @@ class InhumationNicheController extends Controller
 
         return $inhumation;
     }
+
+    /**
+    * Display a listing of the resource API.
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function get(Request $request)
+    {
+        // Obtener solo los Nichos ocupados ("inhumados")
+        $niches = Niche::select('id')->whereHas('pavilion', function ($query) {
+                        $query->where('cemetery_id', auth()->user()->cemetery_id);
+                    })->where('state', 'O')
+                      ->get();
+
+        // Obtener datos de la Inhumación (Difunto, Nicho, Pavellón) para su filtración
+        $term = $request->term;
+
+        $data = Inhumation::with(['deceased', 'buriable', 'buriable.pavilion'])->where( function ($query) use ($term) {
+
+                $query->whereHas('deceased', function ($deceaseds) use ($term)  {
+
+                        $deceaseds->where( function ($deceased) use ($term) {
+
+                            $deceased->where('names', 'LIKE', '%'.$term.'%')
+                                    ->orWhere('surnames', 'LIKE', '%'.$term.'%')
+                                    ->orWhere('document_numb', 'LIKE', '%'.$term.'%');
+                        });
+
+                })->orwhereHasMorph('buriable', Niche::class, function ($niches) use ($term)  {
+
+                    $niches->where( function ($niche) use ($term) {
+
+                        $niche->where('row_x', 'LIKE', '%'.$term.'%')
+                            ->orwhere('col_y', 'LIKE', '%'.$term.'%');
+
+                        $niche->orWhereHas('pavilion', function ($pavilions) use ($term) {
+            
+                            $pavilions->where( function ($pavilion) use ($term) {
+            
+                                $pavilion->where('name', 'LIKE', '%' . $term . '%');
+            
+                            });
+                        });
+                    });
+                    
+                });
+
+            })->whereIn('buriable_id', $niches)
+                ->where('buriable_type', 'App\Niche')
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+        
+        $data->appends(['term' => $term]);
+
+        return $data;
+    }
 }

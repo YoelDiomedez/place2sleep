@@ -18,7 +18,7 @@ $factory->define(Mausoleum::class, function (Faker $faker) {
         'pavilion_id'   => $faker->unique()->randomElement($pavilions),
         'name'          => $faker->company.' '.$faker->companySuffix,
         'location'      => $faker->bothify('Mz. ? Lote ##'),
-        'reference_doc' => $faker->numerify('Resolucion N° ###-'.date('Y').'-SBPP-P'),
+        'doc'           => $faker->numerify('Resolucion N° ###-'.date('Y').'-SBPP-P'),
         'size'          => $number,
         'availability'  => $number,
         'extensions'    => 0,

@@ -49,4 +49,9 @@ class Inhumation extends Model
     {
         return $this->belongsTo(Relative::class);
     }
+
+    public function pavilion()
+    {
+        return $this->buriable->pavilion;
+    }
 }

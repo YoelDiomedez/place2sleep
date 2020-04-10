@@ -18,7 +18,7 @@ class CreateMausoleumsTable extends Migration
             $table->unsignedBigInteger('pavilion_id'); 
             $table->string('name');
             $table->string('location');
-            $table->string('reference_doc');
+            $table->string('doc')->comment('Documento de Referencia');
             $table->unsignedTinyInteger('size');
             $table->unsignedTinyInteger('availability');
             $table->unsignedTinyInteger('extensions');

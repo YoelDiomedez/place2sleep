@@ -55,4 +55,7 @@ Route::prefix('api')->group( function () {
 
     Route::get('niche', 'NicheController@get');
     Route::get('mausoleum', 'MausoleumController@get');
+
+    Route::get('niches/inhumation', 'InhumationNicheController@get');
+    Route::get('mausoleums/inhumation', 'InhumationMausoleumController@get');
 });
