@@ -86,13 +86,17 @@ class MausoleumController extends Controller
      */
     public function update(Request $request, Mausoleum $mausoleum)
     {
-        $mausoleum->pavilion_id   = $request->pavilion_id;
-        $mausoleum->name          = $request->name;
-        $mausoleum->location      = $request->location;
-        $mausoleum->doc           = $request->doc;
-        $mausoleum->availability  = $mausoleum->availability + $request->extensions;
-        $mausoleum->extensions    = $mausoleum->extensions + $request->extensions;
-        $mausoleum->price         = $request->price;
+        $mausoleum->pavilion_id = $request->pavilion_id;
+        $mausoleum->name        = $request->name;
+        $mausoleum->location    = $request->location;
+        $mausoleum->doc         = $request->doc;
+        $mausoleum->price       = $request->price;
+
+        if ($mausoleum->availability == 0) {
+
+            $mausoleum->availability = $mausoleum->availability + $request->extensions;
+            $mausoleum->extensions   = $mausoleum->extensions + $request->extensions;
+        }
 
         $mausoleum->update();
 

@@ -335,6 +335,13 @@
             $('#price').val(data.price)
             $('#created_at').val(data.created_at)
 
+            if (data.availability > 0) {
+                document.getElementById('extensions').disabled = true;
+            } else {
+                document.getElementById('extensions').disabled = false;
+                $('#extensions').val(0)
+            }
+
             $('p').text(data.name +' - '+ data.pavilion.name)
         }
 

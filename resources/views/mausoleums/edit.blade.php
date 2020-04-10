@@ -94,7 +94,7 @@
                                     step="1"
                                     min="0"
                                     max="9999"
-                                    required>
+                                >
                             </div> 
                         </div>
                         <div class="col-md-6">
