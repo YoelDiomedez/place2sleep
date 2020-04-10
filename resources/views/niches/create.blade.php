@@ -21,6 +21,21 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label class="bold">Estado</label>
+                                <div class="mt-radio-inline">
+                                    <label class="mt-radio">
+                                        <input type="radio" name="state" value="D" checked required> Disponible
+                                        <span></span>
+                                    </label>
+                                    <label class="mt-radio">
+                                        <input type="radio" name="state" value="O"> Ocupado
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label class="bold">Fila</label>
                                 <select name="row_x" class="form-control" required>
                                     <option value="" disabled selected>Seleccione una Fila</option>
@@ -61,19 +76,6 @@
                                     max="99"
                                     required>
                             </div> 
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="bold">Estado</label>
-                                <select name="state" class="form-control" required>
-                                    <option value="" disabled selected>Seleccione un Estado</option>
-                                    <option value="D">Disponible</option>
-                                    <option value="T">Tramite</option>
-                                    <option value="O">Ocupado</option>
-                                    <option value="R">Reservado</option>
-                                    <option value="Z">Otro</option>
-                                </select>
-                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">

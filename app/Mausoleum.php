@@ -19,4 +19,12 @@ class Mausoleum extends Model
     {
         return $this->belongsTo(Pavilion::class);
     }
+    
+    /**
+     * Get the niche's bury info.
+     */
+    public function buries()
+    {
+        return $this->morphMany(Inhumation::class, 'buriable');
+    }
 }

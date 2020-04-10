@@ -83,4 +83,26 @@ class RelativeController extends Controller
 
         return $relative;
     }
+
+    /**
+    * Display a listing of the resource API.
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function get(Request  $request)
+    {
+        $term = $request->term;
+
+        $data = Relative::select('id', 'names', 'surnames', 'document_numb')
+                        ->where('names', 'LIKE', '%'.$term.'%')
+                        ->orWhere('surnames', 'LIKE', '%'.$term.'%')
+                        ->orWhere('document_numb', 'LIKE', '%'.$term.'%')
+                        ->orderBy('id', 'desc')
+                        ->paginate(10);
+
+        $data->appends(['term' => $term]);
+
+        return $data;
+    }
 }

@@ -21,14 +21,38 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/choice', 'HomeController@choice')->name('choice');
 Route::get('/select/{id}', 'HomeController@select')->name('select');
 
-Route::apiResource('/cemetery', 'CemeteryController')->except(['show']);
-Route::apiResource('/deceased', 'DeceasedController')->except(['show']);
-Route::apiResource('/relative', 'RelativeController')->except(['show']);
+Route::apiResource('cemetery', 'CemeteryController')->except(['show']);
+Route::apiResource('deceased', 'DeceasedController')->except(['show']);
+Route::apiResource('relative', 'RelativeController')->except(['show']);
+Route::apiResource('pavilion', 'PavilionController')->except(['show']);
 
-Route::apiResource('/niche', 'NicheController')->except(['show']);
-Route::apiResource('/pavilion', 'PavilionController')->except(['show']);
-Route::apiResource('/mausoleum', 'MausoleumController')->except(['show']);
+Route::apiResource('niche', 'NicheController');
+Route::apiResource('mausoleum', 'MausoleumController');
 
-Route::prefix('api')->group(function () {
+Route::apiResource('niches/inhumation', 'InhumationNicheController')->names([
+    
+    'index'   => 'niche.inhumation.index',
+    'store'   => 'niche.inhumation.store',
+    'update'  => 'niche.inhumation.update',
+    'destroy' => 'niche.inhumation.destroy'
+
+])->except(['show']);
+
+Route::apiResource('mausoleums/inhumation', 'InhumationMausoleumController')->names([
+    
+    'index'   => 'mausoleum.inhumation.index',
+    'store'   => 'mausoleum.inhumation.store',
+    'update'  => 'mausoleum.inhumation.update',
+    'destroy' => 'mausoleum.inhumation.destroy'
+
+])->except(['show']);
+
+Route::prefix('api')->group( function () {
+
     Route::get('pavilion', 'PavilionController@get');
+    Route::get('deceased', 'DeceasedController@get');
+    Route::get('relative', 'RelativeController@get');
+
+    Route::get('niche', 'NicheController@get');
+    Route::get('mausoleum', 'MausoleumController@get');
 });

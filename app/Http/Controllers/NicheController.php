@@ -40,7 +40,7 @@ class NicheController extends Controller
 
         return view('niches.index');
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -71,9 +71,9 @@ class NicheController extends Controller
      */
     public function show(Niche $niche)
     {
-        //
+      return $niche;
     }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -83,9 +83,6 @@ class NicheController extends Controller
      */
     public function update(Request $request, Niche $niche)
     {   
-        // $a =  $niche->load('pavilion');
-        // return $a;
-
         $niche->pavilion_id = $request->pavilion_id;
         $niche->category    = $request->category;
         $niche->state       = $request->state;
@@ -109,5 +106,44 @@ class NicheController extends Controller
         $niche->delete();
 
         return $niche;
+    }
+    
+    /**
+    * Display a listing of the resource API.
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function get(Request  $request)
+    {
+        $pavilions = \App\Pavilion::select('id')
+                                    ->where('cemetery_id', auth()->user()->cemetery_id)
+                                    ->get();
+
+        $term = $request->term;
+
+        $data = Niche::with('pavilion')->where( function ($query) use ($term) { 
+
+            $query->where('row_x', 'LIKE', '%'.$term.'%')
+                ->orwhere('col_y', 'LIKE', '%'.$term.'%')
+                ->orwhere('category', 'LIKE', '%'.$term.'%');
+
+            $query->orWhereHas('pavilion', function($q) use ($term) {
+                
+                $q->where( function($q) use ($term) {
+
+                    $q->where('name', 'LIKE', '%' . $term . '%');
+
+                });
+            });
+
+        })->whereIn('pavilion_id', $pavilions)
+            ->where('state', 'D')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+        
+        $data->appends(['term' => $term]);
+
+        return $data;
     }
 }

@@ -43,15 +43,9 @@ class Niche extends Model
             case 'D':
                 return 'Disponible';
                 break;
-            case 'T':
-                return 'Tramite';
-                break;
              case 'O':
                 return 'Ocupado';
                 break;
-             case 'R':
-                 return 'Reservado';
-                 break;
             default:
                 return 'Otro';
                 break;
@@ -61,5 +55,13 @@ class Niche extends Model
     public function pavilion()
     {
         return $this->belongsTo(Pavilion::class);
+    }
+
+    /**
+     * Get the niche's bury info.
+     */
+    public function bury()
+    {
+        return $this->morphOne(Inhumation::class, 'buriable');
     }
 }

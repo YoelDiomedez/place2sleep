@@ -89,4 +89,31 @@ class DeceasedController extends Controller
 
         return $deceased;
     }
+
+    /**
+    * Display a listing of the resource API.
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function get(Request  $request)
+    {
+        $term = $request->term;
+
+        $inhumations = \App\Inhumation::select('deceased_id')->get();
+
+        $data = Deceased::select('id', 'names', 'surnames', 'document_numb')
+                    ->whereNotIn('id', $inhumations)
+                    ->where(function ($query) use ($term) {
+                        $query->where('names', 'LIKE', '%'.$term.'%')
+                            ->orWhere('surnames', 'LIKE', '%'.$term.'%')
+                            ->orWhere('document_numb', 'LIKE', '%'.$term.'%');
+                    })
+                    ->orderBy('id', 'desc')
+                    ->paginate(10);
+
+        $data->appends(['term' => $term]);
+
+        return $data;
+    }
 }

@@ -89,7 +89,10 @@ class PavilionController extends Controller
         $data = Pavilion::select('id', 'name', 'type', 'cemetery_id')
                         ->where('cemetery_id', auth()->user()->cemetery_id)
                         ->where('type', $request->type)
-                        ->where('name', 'LIKE', '%'.$term.'%')
+                        ->where(function ($query) use ($term) {
+                            $query->where('name', 'LIKE', '%'.$term.'%');
+                        })
+                        ->orderBy('id', 'desc')
                         ->paginate(10);
 
         $data->appends(['term' => $term]);

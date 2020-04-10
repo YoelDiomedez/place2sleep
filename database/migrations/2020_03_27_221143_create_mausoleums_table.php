@@ -19,9 +19,9 @@ class CreateMausoleumsTable extends Migration
             $table->string('name');
             $table->string('location');
             $table->string('reference_doc');
-            $table->tinyInteger('size');
-            $table->tinyInteger('availability');
-            $table->tinyInteger('extensions');
+            $table->unsignedTinyInteger('size');
+            $table->unsignedTinyInteger('availability');
+            $table->unsignedTinyInteger('extensions');
             $table->decimal('price', 8, 2);
             $table->timestamps();
             $table->foreign('pavilion_id')->references('id')->on('pavilions')->onDelete('cascade');

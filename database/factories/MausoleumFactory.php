@@ -11,14 +11,17 @@ $factory->define(Mausoleum::class, function (Faker $faker) {
                             ->where('type', 'M')
                             ->whereIn('cemetery_id', [1, 2])
                             ->get();
+
+    $number = $faker->numberBetween($min = 1, $max = 10);
+
     return [
         'pavilion_id'   => $faker->unique()->randomElement($pavilions),
         'name'          => $faker->company.' '.$faker->companySuffix,
         'location'      => $faker->bothify('Mz. ? Lote ##'),
         'reference_doc' => $faker->numerify('Resolucion N° ###-'.date('Y').'-SBPP-P'),
-        'size'          => $faker->numberBetween($min = 1, $max = 99),
-        'availability'  => $faker->numberBetween($min = 1, $max = 99),
-        'extensions'    => $faker->numberBetween($min = 1, $max = 99),
+        'size'          => $number,
+        'availability'  => $number,
+        'extensions'    => 0,
         'price'         => $faker->randomFloat($nbMaxDecimals = 2, $min = 1000, $max = 99999)
     ];
 });

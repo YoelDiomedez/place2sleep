@@ -59,7 +59,7 @@
                             <th>Categoria</th>
                             <th>Fila</th>
                             <th>Columna</th>
-                            <th>Precio</th>
+                            <th>Precio (S/)</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -336,19 +336,11 @@
 
             switch (data.state) {
                 case 'Disponible':
-                    document.getElementById('state').selectedIndex = '1'
+                    $('#disponible').prop('checked', true)
                     break;
-                case 'Tramite':
-                    document.getElementById('state').selectedIndex = '2'
-                    break;
+
                 case 'Ocupado':
-                    document.getElementById('state').selectedIndex = '3'
-                    break;
-                case 'Reservado':
-                    document.getElementById('state').selectedIndex = '4'
-                    break;
-                default:
-                    document.getElementById('state').selectedIndex = '5'
+                    $('#ocupado').prop('checked', true)
                     break;
             }
 
@@ -532,20 +524,15 @@
             case 'Disponible':
                 return '<span class="label label-primary">'+state+'</span>'
                 break;
-            case 'Tramite':
-                return '<span class="label label-warning">'+state+'</span>'
-                break;
             case 'Ocupado':
                 return '<span class="label label-danger">'+state+'</span>'
-                break;
-            case 'Reservado':
-                return '<span class="label label-success">'+state+'</span>'
                 break;
             default:
                 return '<span class="label label-default">'+state+'</span>'
                 break;
         }
     }
+    
     /*
      * Api Functions
      */

@@ -160,7 +160,7 @@
         // Filtro de Mausoleos por Pabellon
         $('#pavilionFilter').empty()
 
-        getPavilions('#pavilionFilter', 'N')
+        getPavilions('#pavilionFilter', 'M')
 
         $('#pavilionFilter').on('select2:select', function (event) {
 

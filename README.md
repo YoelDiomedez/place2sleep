@@ -4,28 +4,23 @@ Place 2 Sleep - Sistema para la Administración de Cementerios
 
 ## Características
 
+**Módulo Inhumaciones**
+- [x] Nicho
+- [x] Mausoleo
+
 **Módulo Cementerio**
 - [x] Nichos
-      - [X] Inhumaciones
-      - [X] Pagos
 - [x] Mausoleos
-      - [X] Inhumaciones
-      - [X] Pagos
 - [x] Pabellones
-- [x] Exhumaciones
 
 **Módulo Administración**
 - [x] Difuntos
 - [x] Familiares
 - [x] Cementerios
 
-**Módulo Sistema**
-- [x] Users
-- [x] Auditing
-
 ## Requirements
 
-- PHP >= 7.1.3 (composer)
+- PHP >= 7.3.5 (composer)
 - NodeJS >= 13.0.1 (npm)
 - MariaDB >= 10.1.40
 

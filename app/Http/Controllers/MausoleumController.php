@@ -74,7 +74,7 @@ class MausoleumController extends Controller
      */
     public function show(Mausoleum $mausoleum)
     {
-        //
+      return $mausoleum;
     }
 
     /**
@@ -110,5 +110,43 @@ class MausoleumController extends Controller
         $mausoleum->delete();
 
         return $mausoleum;
+    }
+
+    /**
+    * Display a listing of the resource API.
+    *
+    * @param \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function get(Request  $request)
+    {
+        $pavilions = \App\Pavilion::select('id')
+                                    ->where('cemetery_id', auth()->user()->cemetery_id)
+                                    ->get();
+
+        $term = $request->term;
+
+        $data = Mausoleum::with('pavilion')->where( function ($query) use ($term) { 
+
+                $query->where('name', 'LIKE', '%'.$term.'%')
+                    ->orwhere('location', 'LIKE', '%'.$term.'%');
+
+                $query->orWhereHas('pavilion', function($q) use ($term) {
+                    
+                    $q->where( function($q) use ($term) {
+
+                        $q->where('name', 'LIKE', '%' . $term . '%');
+
+                    });
+                });
+
+            })->whereIn('pavilion_id', $pavilions)
+                ->where('availability', '>', 0)
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+
+        $data->appends(['term' => $term]);
+
+        return $data;
     }
 }

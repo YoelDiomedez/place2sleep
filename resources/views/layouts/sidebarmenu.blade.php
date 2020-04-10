@@ -20,7 +20,7 @@
                 }}
             ">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-screen-desktop "></i>
+                    <i class="fa fa-laptop"></i>
                     <span class="title">Dashboard</span>
                     <span class="arrow 
                         {{   
@@ -39,10 +39,40 @@
             </li>
 
             <li class="nav-item
+                {{ 
+                    request()->is('niches/inhumation') ||
+                    request()->is('mausoleums/inhumation')
+                    ? 'active open' : '' 
+                }}">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-inbox"></i>
+                    <span class="title">Inhumaciones</span>
+                    <span class="arrow 
+                    {{  
+                        request()->is('niches/inhumation') ||
+                        request()->is('mausoleums/inhumation')
+                        ? 'open' : '' 
+                    }}">
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item {{ request()->is('niches/inhumation') ? 'active' : '' }}">
+                        <a href="{{ route('niche.inhumation.index') }}" class="nav-link">
+                            <span class="title">Nicho</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->is('mausoleums/inhumation') ? 'active' : '' }}">
+                        <a href="{{ route('mausoleum.inhumation.index') }}" class="nav-link">
+                            <span class="title">Mausoleo</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item
                 {{    
                     request()->is('niche')     ||
                     request()->is('mausoleum') ||
-                    request()->is('pavilion') 
+                    request()->is('pavilion')  
                     ? 'active open' : '' 
                 }}">
                 <a href="javascript:;" class="nav-link nav-toggle">
@@ -52,12 +82,12 @@
                     {{  
                         request()->is('niche')     ||
                         request()->is('mausoleum') ||
-                        request()->is('pavilion') 
+                        request()->is('pavilion')  
                          ? 'open' : '' 
                     }}">
                 </a>
                 <ul class="sub-menu">
-                    <li class="nav-item {{ request()->is('niche') ? 'active open' : '' }}">
+                    <li class="nav-item {{ request()->is('niche') ? 'active ' : '' }}">
                         <a href="{{ route('niche.index') }}" class="nav-link">
                             <span class="title">Nichos</span>
                         </a>
@@ -83,7 +113,7 @@
                     ? 'active open' : '' 
                 }}">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-layers"></i>
+                    <i class="fa fa-newspaper-o"></i>
                     <span class="title">Administración</span>
                     <span class="arrow 
                     {{   

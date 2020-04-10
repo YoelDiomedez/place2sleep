@@ -19,7 +19,7 @@ class CreateNichesTable extends Migration
             $table->char('row_x', 1);
             $table->char('col_y', 2);
             $table->enum('category', ['A', 'P', 'O', 'D', 'Z'])->comment('Adulto, Parvulo, Osario, Dorado, Z=Otro');
-            $table->enum('state', ['D', 'T', 'O', 'R', 'Z'])->comment('Disponible, Tramite, Ocupado, Reservado, Z=Otro');
+            $table->enum('state', ['D', 'O'])->comment('Disponible, Ocupado');
             $table->decimal('price', 8, 2);	
             $table->timestamps();
             $table->foreign('pavilion_id')->references('id')->on('pavilions')->onDelete('cascade');
