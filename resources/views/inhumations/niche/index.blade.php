@@ -58,7 +58,7 @@
                             <th>Pabellón</th>
                             <th>Fila</th>
                             <th>Columna</th>
-                            <th>Costo (S/)</th>
+                            <th>Costo Total (S/)</th>
                             <th>Difunto</th>
                             <th>Opciones</th>
                         </tr>
@@ -86,32 +86,33 @@
     <!-- END PAGE LEVEL PLUGINS -->
     <script>
     $(document).ready( function () {
-                /**************************************************************************/
+        
+        /**************************************************************************/
         /* Lista - Read
         /**************************************************************************/
         var inhumationDataTable = setUpDataTable(
             '#inhumationDataTable',
-            'Lista de Inhumaciones Nichos',
+            'Lista de Inhumaciones en Nichos',
             [ 0, 1, 2, 3, 4, 5, 6],
             [
                 {
-                    targets: [1, 2, 5, 6],
+                    targets: [2, 3, 4],
                     sortable: false
                 }
             ],
             [
                 {data: 'id', name: 'id'},
-                {data: 'bury.agreement', name: 'bury.agreement', render: function ( data, type, row ) {
-                    return formatStateLabel(row.bury.agreement);
+                {data: 'agreement', name: 'agreement', render: function ( data, type, row ) {
+                    return formatStateLabel(row.agreement)
                 }},
-                {data: 'pavilion.name', name: 'pavilion.name'},
-                {data: 'row_x', name: 'row_x'},
-                {data: 'col_y', name: 'col_y'},
-                {data: null, render: function ( data, type, row ) {
-                    return totalAmount(row.bury.amount, row.bury.discount, row.bury.additional);
+                {data: 'buriable.pavilion.name', name: 'buriable.pavilion.name'},
+                {data: 'buriable.row_x', name: 'buriable.row_x'},
+                {data: 'buriable.col_y', name: 'buriable.col_y'},
+                {data: 'amount', name: 'amount', render: function ( data, type, row ) {
+                    return totalAmount(row.buriable.price, row.discount, row.additional)
                 }},
-                {data: 'bury.deceased.document_numb', name: 'bury.deceased.document_numb', render: function ( data, type, row ) {
-                    return row.bury.deceased.names +' '+ row.bury.deceased.surnames +' - '+ row.bury.deceased.document_numb
+                {data: 'deceased.document_numb', name: 'deceased.document_numb', render: function ( data, type, row ) {
+                    return row.deceased.document_numb +' - '+ row.deceased.names +' '+ row.deceased.surnames
                 }},
                 {data: 'buttons', orderable: false, className: "text-center btn-actions"},
             ]
@@ -120,33 +121,33 @@
         $('#inhumationDataTable').removeClass('no-footer')
         $.fn.dataTable.ext.errMode = 'throw'
 
-        $('#reloadInhumationDT').click( function () {
+        $('#reloadInhumationDT').click( function () { 
 
             $('#inhumationDataTable').DataTable().destroy()
 
             inhumationDataTable = setUpDataTable(
                 '#inhumationDataTable',
-                'Lista de Inhumaciones Nichos',
+                'Lista de Inhumaciones en Nichos',
                 [ 0, 1, 2, 3, 4, 5, 6],
                 [
                     {
-                        targets: [1, 2, 5, 6],
+                        targets: [2, 3, 4],
                         sortable: false
                     }
                 ],
                 [
                     {data: 'id', name: 'id'},
-                    {data: 'bury.agreement', name: 'bury.agreement', render: function ( data, type, row ) {
-                        return formatStateLabel(row.bury.agreement);
+                    {data: 'agreement', name: 'agreement', render: function ( data, type, row ) {
+                        return formatStateLabel(row.agreement)
                     }},
-                    {data: 'pavilion.name', name: 'pavilion.name'},
-                    {data: 'row_x', name: 'row_x'},
-                    {data: 'col_y', name: 'col_y'},
-                    {data: null, render: function ( data, type, row ) {
-                        return totalAmount(row.bury.amount, row.bury.discount, row.bury.additional);
+                    {data: 'buriable.pavilion.name', name: 'buriable.pavilion.name'},
+                    {data: 'buriable.row_x', name: 'buriable.row_x'},
+                    {data: 'buriable.col_y', name: 'buriable.col_y'},
+                    {data: 'amount', name: 'amount', render: function ( data, type, row ) {
+                        return totalAmount(row.buriable.price, row.discount, row.additional)
                     }},
-                    {data: 'bury.deceased.document_numb', name: 'bury.deceased.document_numb', render: function ( data, type, row ) {
-                        return row.bury.deceased.names +' '+ row.bury.deceased.surnames +' - '+ row.bury.deceased.document_numb
+                    {data: 'deceased.document_numb', name: 'deceased.document_numb', render: function ( data, type, row ) {
+                        return row.deceased.document_numb +' - '+ row.deceased.names +' '+ row.deceased.surnames
                     }},
                     {data: 'buttons', orderable: false, className: "text-center btn-actions"},
                 ]
@@ -170,27 +171,27 @@
 
             inhumationDataTable = setUpDataTable(
                 '#inhumationDataTable',
-                'Lista de Inhumaciones Nichos',
+                'Lista de Inhumaciones en Nichos',
                 [ 0, 1, 2, 3, 4, 5, 6],
                 [
                     {
-                        targets: [1, 2, 5, 6],
+                        targets: [2, 3, 4],
                         sortable: false
                     }
                 ],
                 [
                     {data: 'id', name: 'id'},
-                    {data: 'bury.agreement', name: 'bury.agreement', render: function ( data, type, row ) {
-                        return formatStateLabel(row.bury.agreement);
+                    {data: 'agreement', name: 'agreement', render: function ( data, type, row ) {
+                        return formatStateLabel(row.agreement)
                     }},
-                    {data: 'pavilion.name', name: 'pavilion.name'},
-                    {data: 'row_x', name: 'row_x'},
-                    {data: 'col_y', name: 'col_y'},
-                    {data: null, render: function ( data, type, row ) {
-                        return totalAmount(row.bury.amount, row.bury.discount, row.bury.additional);
+                    {data: 'buriable.pavilion.name', name: 'buriable.pavilion.name'},
+                    {data: 'buriable.row_x', name: 'buriable.row_x'},
+                    {data: 'buriable.col_y', name: 'buriable.col_y'},
+                    {data: 'amount', name: 'amount', render: function ( data, type, row ) {
+                        return totalAmount(row.buriable.price, row.discount, row.additional)
                     }},
-                    {data: 'bury.deceased.document_numb', name: 'bury.deceased.document_numb', render: function ( data, type, row ) {
-                        return row.bury.deceased.names +' '+ row.bury.deceased.surnames +' - '+ row.bury.deceased.document_numb
+                    {data: 'deceased.document_numb', name: 'deceased.document_numb', render: function ( data, type, row ) {
+                        return row.deceased.document_numb +' - '+ row.deceased.names +' '+ row.deceased.surnames
                     }},
                     {data: 'buttons', orderable: false, className: "text-center btn-actions"},
                 ],
@@ -227,7 +228,7 @@
                     url: "{{ url('niche') }}" + '/' + id,
                     success: function(data) {
                         // console.log(data)
-                        $('#newAmount').val(data.price)
+                        $('#newNichePrice').val(data.price)
                     },
                     error: function(xhr, status) {
                         console.log(xhr.responseJSON.message)
@@ -255,9 +256,9 @@
             getDeceaseds('#editDeceased')
             getRelatives('#editRelative')
 
-            selectNiche('#editNiche', data)
-            selectDeceased('#editDeceased', data.bury.deceased)
-            selectRelative('#editRelative', data.bury.relative)
+            selectNiche('#editNiche', data.buriable)
+            selectDeceased('#editDeceased', data.deceased)
+            selectRelative('#editRelative', data.relative)
 
             setUpFormModal('#updateInhumationForm', '#updateInhumationModal', 'show', data)
 
@@ -271,7 +272,7 @@
                     url: "{{ url('niche') }}" + '/' + id,
                     success: function(data) {
                         // console.log(data)
-                        $('#editAmount').val(data.price)
+                        $('#editNichePrice').val(data.price)
                     },
                     error: function(xhr, status) {
                         console.log(xhr.responseJSON.message)
@@ -363,7 +364,7 @@
                     text: '<i class="fa fa-th-list"></i> Columnas'
                 }
             ],
-            dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+            dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'><'col-md-6 col-sm-12'>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         })
 
         return dataTable
@@ -375,17 +376,17 @@
 
         if (data) {
             // console.log(data)
-            $('#update').val(data.bury.id)
-            $('#delete').val(data.bury.id)
+            $('#update').val(data.id)
+            $('#delete').val(data.id)
             
-            $('#ric').val(data.bury.ric)
-            $('#notes').val(data.bury.notes)
-            $('#discount').val(data.bury.discount)
-            $('#additional').val(data.bury.additional)
+            $('#ric').val(data.ric)
+            $('#notes').val(data.notes)
+            $('#discount').val(data.discount)
+            $('#additional').val(data.additional)
 
-            $('#editAmount').val(data.price)
+            $('#editNichePrice').val(data.buriable.price)
 
-            switch (data.bury.agreement) {
+            switch (data.agreement) {
                 case 'Compra':
                     document.getElementById('agreement').selectedIndex = '1'
                     break;
@@ -403,7 +404,7 @@
                     break;
             }
 
-            $('p').text(data.pavilion.name +' - '+ data.row_x +' '+ data.col_y)
+            $('p').text(data.buriable.pavilion.name +' - '+ data.buriable.row_x +' '+ data.buriable.col_y)
         }
 
         $(modal).modal(behavior)
@@ -446,7 +447,14 @@
                 // console.log(data)
                 setUpFormModal(form, modal, 'hide')
 
-                dataTable.ajax.reload()
+                let row = $('#inhumationDataTable').dataTable().fnFindCellRowIndexes(id, 0)
+
+                dataTable.cell(row, 1).data(formatStateLabel(data.agreement)).draw(false)
+                dataTable.cell(row, 2).data(data.buriable.pavilion.name).draw(false)
+                dataTable.cell(row, 3).data(data.buriable.row_x).draw(false)
+                dataTable.cell(row, 4).data(data.buriable.col_y).draw(false)
+                dataTable.cell(row, 5).data(data.amount).draw(false)
+                dataTable.cell(row, 6).data(data.deceased.document_numb +' - '+ data.deceased.names +' '+ data.deceased.surnames).draw(false)
 
                 toastrMessage('info', 'Inhumación Actualizada')
                 loading('#actualizar', 'stop')
@@ -471,7 +479,8 @@
                 //console.log(data)
                 setUpFormModal(form, modal, 'hide')
 
-                dataTable.ajax.reload()
+                let row = $('#inhumationDataTable').dataTable().fnFindCellRowIndexes(id, 0)
+                dataTable.row(row).remove().draw()
 
                 toastrMessage('warning', 'Inhumación Eliminada')
                 loading('#eliminar', 'stop')
@@ -506,7 +515,8 @@
     }
 
     function totalAmount(amount, discount, additional) {
-        return (parseFloat(amount) + parseFloat(additional)) - parseFloat(discount)
+        let total = (parseFloat(amount) + parseFloat(additional)) - parseFloat(discount)
+        return total.toFixed(2)
     }
 
     /*

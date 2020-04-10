@@ -21,13 +21,24 @@ class InhumationNicheController extends Controller
             if ( $request->pavilion_id ) {
                 return datatables()->eloquent(
 
-                    Niche::with(['pavilion', 'bury', 'bury.deceased', 'bury.relative'])
-                        ->whereHas('pavilion', function ($query) {
-    
-                            $query->where('cemetery_id', auth()->user()->cemetery_id);
-    
-                        })->where('pavilion_id', $request->pavilion_id)
-                          ->where('state', 'O')
+                    // Niche::with(['pavilion', 'bury', 'bury.deceased', 'bury.relative'])
+                    //     ->whereHas('pavilion', function ($query) {
+                    //         $query->where('cemetery_id', auth()->user()->cemetery_id);
+                    //     })->where('pavilion_id', $request->pavilion_id)
+                    //       ->where('state', 'O')
+                    
+                    Inhumation::with(['buriable.pavilion', 'deceased', 'relative'])
+                      ->whereHasMorph('buriable', Niche::class, function ($niches) use ($request) {
+
+                            $niches->where( function ($niche) use ($request) {
+
+                                $niche->WhereHas('pavilion', function ($pavilions) use ($request) {
+
+                                    $pavilions->where('cemetery_id', auth()->user()->cemetery_id)
+                                              ->where('pavilion_id', $request->pavilion_id);
+                                });
+                            });
+                    })
                 )
                 ->addColumn('buttons', 'inhumations.buttons.option')
                 ->rawColumns(['buttons'])
@@ -36,12 +47,23 @@ class InhumationNicheController extends Controller
             // Default List
             return datatables()->eloquent(
 
-                Niche::with(['pavilion', 'bury', 'bury.deceased', 'bury.relative'])
-                    ->whereHas('pavilion', function ($query) {
+                // Niche::with(['pavilion', 'bury', 'bury.deceased', 'bury.relative'])
+                //     ->whereHas('pavilion', function ($query) {
+                //         $query->where('cemetery_id', auth()->user()->cemetery_id);
+                //     })->where('state', 'O')
 
-                        $query->where('cemetery_id', auth()->user()->cemetery_id);
+                Inhumation::with(['buriable.pavilion', 'deceased', 'relative'])
+                  ->whereHasMorph('buriable', Niche::class, function ($niches) {
 
-                    })->where('state', 'O')
+                    $niches->where( function ($niche) {
+
+                        $niche->WhereHas('pavilion', function ($pavilions) {
+
+                            $pavilions->where('cemetery_id', auth()->user()->cemetery_id);
+
+                        });
+                    });
+                })
             )
             ->addColumn('buttons', 'inhumations.buttons.option')
             ->rawColumns(['buttons'])
@@ -73,7 +95,7 @@ class InhumationNicheController extends Controller
         $niche->state = 'O';
         $niche->update();
 
-        $inhumation->amount = $niche->price;
+        $inhumation->amount = (($niche->price + $request->additional) - $request->discount);
 
         $inhumation->buriable()->associate($niche)->save();
 
@@ -107,14 +129,14 @@ class InhumationNicheController extends Controller
             $new_niche->state = 'O';
             $new_niche->update();
 
-            $inhumation->amount = $new_niche->price;
+            $inhumation->amount = (($new_niche->price + $request->additional) - $request->discount);
 
             $inhumation->buriable()->associate($new_niche)->update();
         }
 
         $inhumation->update();
 
-        return $inhumation;
+        return $inhumation->load(['buriable.pavilion', 'deceased', 'relative']);
     }
 
     /**

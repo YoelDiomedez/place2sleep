@@ -12,7 +12,7 @@ $factory->define(Mausoleum::class, function (Faker $faker) {
                             ->whereIn('cemetery_id', [1, 2])
                             ->get();
 
-    $number = $faker->numberBetween($min = 1, $max = 10);
+    $number = $faker->numberBetween($min = 2, $max = 10);
 
     return [
         'pavilion_id'   => $faker->unique()->randomElement($pavilions),

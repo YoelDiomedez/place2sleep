@@ -65,7 +65,7 @@
                     <label class="bold">Monto Parcial (S/)</label>
                     <input 
                         type="number" 
-                        id="newAmount" 
+                        id="newNichePrice" 
                         class="form-control" 
                         step="0.01"
                         min="0"
