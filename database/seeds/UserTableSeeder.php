@@ -2,6 +2,7 @@
 
 use App\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class UserTableSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+        $role = Role::create(['name' => 'Admin']);
 
         $user = User::create([
             'name' => 'Yoel Diomedez',
@@ -22,5 +24,6 @@ class UserTableSeeder extends Seeder
         ]);
 
         $user->cemeteries()->attach([1, 2]);
+        $user->assignRole($role);
     }
 }

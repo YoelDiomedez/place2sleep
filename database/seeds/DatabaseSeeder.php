@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
         factory(App\Relative::class, 100)->create();
 
         $this->call(CemeteryTableSeeder::class);
-        $this->call(UserTableSeeder::class);
-
         factory(App\Pavilion::class, 200)->create();
-
         $this->call(NicheTableSeeder::class);
         $this->call(MausoleumTableSeeder::class);
+
+        $this->call(UserTableSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
     }
 }
