@@ -21,12 +21,6 @@ class InhumationNicheController extends Controller
             if ( $request->pavilion_id ) {
                 return datatables()->eloquent(
 
-                    // Niche::with(['pavilion', 'bury', 'bury.deceased', 'bury.relative'])
-                    //     ->whereHas('pavilion', function ($query) {
-                    //         $query->where('cemetery_id', auth()->user()->cemetery_id);
-                    //     })->where('pavilion_id', $request->pavilion_id)
-                    //       ->where('state', 'O')
-                    
                     Inhumation::with(['buriable.pavilion', 'deceased', 'relative'])
                       ->whereHasMorph('buriable', Niche::class, function ($niches) use ($request) {
 
@@ -46,11 +40,6 @@ class InhumationNicheController extends Controller
             }
             // Default List
             return datatables()->eloquent(
-
-                // Niche::with(['pavilion', 'bury', 'bury.deceased', 'bury.relative'])
-                //     ->whereHas('pavilion', function ($query) {
-                //         $query->where('cemetery_id', auth()->user()->cemetery_id);
-                //     })->where('state', 'O')
 
                 Inhumation::with(['buriable.pavilion', 'deceased', 'relative'])
                   ->whereHasMorph('buriable', Niche::class, function ($niches) {

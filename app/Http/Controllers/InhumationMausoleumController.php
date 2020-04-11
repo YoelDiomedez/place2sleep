@@ -21,10 +21,19 @@ class InhumationMausoleumController extends Controller
             if ( $request->pavilion_id ) {
                 return datatables()->eloquent(
 
-                    Mausoleum::with(['pavilion', 'buries', 'buries.deceased', 'buries.relative'])
-                        ->whereHas('buries')->whereHas('pavilion', function ($query) {
-                            $query->where('cemetery_id', auth()->user()->cemetery_id); 
-                        })->where('pavilion_id', $request->pavilion_id)
+                    Inhumation::with(['buriable.pavilion', 'deceased', 'relative'])
+                      ->whereHasMorph('buriable', Mausoleum::class, function ($mausoleums) use ($request) {
+
+                        $mausoleums->where( function ($mausoleum) use ($request) {
+
+                            $mausoleum->WhereHas('pavilion', function ($pavilions) use ($request) {
+
+                                $pavilions->where('cemetery_id', auth()->user()->cemetery_id)
+                                          ->where('pavilion_id', $request->pavilion_id);
+
+                            });
+                        });
+                    }) 
 
                 )
                 ->addColumn('buttons', 'inhumations.buttons.option')
@@ -34,11 +43,18 @@ class InhumationMausoleumController extends Controller
             // Default List
             return datatables()->eloquent(
 
-                Mausoleum::with(['pavilion', 'buries', 'buries.deceased', 'buries.relative'])
-                        ->whereHas('buries')->whereHas('pavilion', function ($query) {
-                            $query->where('cemetery_id', auth()->user()->cemetery_id); 
-                        })
-                        
+                Inhumation::with(['buriable.pavilion', 'deceased', 'relative'])
+                  ->whereHasMorph('buriable', Mausoleum::class, function ($mausoleums) {
+
+                    $mausoleums->where( function ($mausoleum) {
+
+                        $mausoleum->WhereHas('pavilion', function ($pavilions) {
+
+                            $pavilions->where('cemetery_id', auth()->user()->cemetery_id);
+
+                        });
+                    });
+                })         
             )
             ->addColumn('buttons', 'inhumations.buttons.option')
             ->rawColumns(['buttons'])
@@ -70,7 +86,7 @@ class InhumationMausoleumController extends Controller
         $mausoleum->availability = $mausoleum->availability - 1;
         $mausoleum->update();
 
-        $inhumation->amount = $mausoleum->price / $mausoleum->size;
+        $inhumation->amount = ((($mausoleum->price / $mausoleum->size) + $request->additional) - $request->discount);
 
         $inhumation->buriable()->associate($mausoleum)->save();
 
@@ -104,14 +120,14 @@ class InhumationMausoleumController extends Controller
             $new_mausoleum->availability = $new_mausoleum->availability - 1;
             $new_mausoleum->update();
 
-            $inhumation->amount = $new_mausoleum->price / $new_mausoleum->size;
+            $inhumation->amount = ((($new_mausoleum->price / $new_mausoleum->size) + $request->additional) - $request->discount);
 
             $inhumation->buriable()->associate($new_mausoleum)->update();
         }
 
         $inhumation->update();
 
-        return $inhumation;
+        return $inhumation->load(['buriable.pavilion', 'deceased', 'relative']);
     }
 
     /**

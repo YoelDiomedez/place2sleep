@@ -11,7 +11,7 @@
 
 @extends('layouts.app')
 
-@section('pagetitle', 'Inhumaciones Mausoleos')
+@section('pagetitle', 'Inhumaciones Mausoleo')
 @section('pagesubtitle', auth()->user()->cemetery_appellation)
 
 @section('content')
@@ -54,12 +54,11 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Convenios</th>
+                            <th>Convenio</th>
                             <th>Pabellón</th>
-                            <th>Nombre</th>
-                            <th>Ubicación</th>
-                            <th>Costos (S/)</th>
-                            <th>Difuntos</th>
+                            <th>Mausoleo</th>
+                            <th>Difunto</th>
+                            <th>Costo Total (S/)</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -69,7 +68,6 @@
     </div>
 </div>
 
-@include('inhumations.mausoleum.choices')
 @include('inhumations.mausoleum.create')
 @include('inhumations.mausoleum.edit')
 @include('inhumations.mausoleum.delete')
@@ -87,32 +85,34 @@
     <!-- END PAGE LEVEL PLUGINS -->
     <script>
     $(document).ready( function () {
-                /**************************************************************************/
+        
+        /**************************************************************************/
         /* Lista - Read
         /**************************************************************************/
         var inhumationDataTable = setUpDataTable(
             '#inhumationDataTable',
-            'Lista de Inhumaciones Mausoleos',
-            [ 0, 1, 2, 3, 4, 5, 6],
+            'Lista de Inhumaciones en Mausoleo',
+            [ 0, 1, 2, 3, 4, 5],
             [
                 {
-                    targets: [1, 2, 5, 6],
+                    targets: [2, 3],
                     sortable: false
                 }
             ],
             [
                 {data: 'id', name: 'id'},
-                {data: null, render: function ( data, type, row ) {
-                    return agreementList(row.buries)
+                {data: 'agreement', name: 'agreement', render: function ( data, type, row ) {
+                    return formatStateLabel(row.agreement)
                 }},
-                {data: 'pavilion.name', name: 'pavilion.name'},
-                {data: 'name', name: 'name'},
-                {data: 'location', name: 'location'},
+                {data: 'buriable.pavilion.name', name: 'buriable.pavilion.name'},
                 {data: null, render: function ( data, type, row ) {
-                    return amountList(row.buries);
+                        return row.buriable.name +' - '+ row.buriable.location
                 }},
-                {data: null, render: function ( data, type, row ) {
-                    return deceasedList(row.buries)
+                {data: 'deceased.document_numb', name: 'deceased.document_numb', render: function ( data, type, row ) {
+                    return row.deceased.document_numb +' - '+ row.deceased.names +' '+ row.deceased.surnames
+                }},
+                {data: 'amount', name: 'amount', render: function ( data, type, row ) {
+                    return totalAmount(row.amount, row.discount, row.additional)
                 }},
                 {data: 'buttons', orderable: false, className: "text-center btn-actions"},
             ]
@@ -121,42 +121,42 @@
         $('#inhumationDataTable').removeClass('no-footer')
         $.fn.dataTable.ext.errMode = 'throw'
 
-        $('#reloadInhumationDT').click( function () {
+        $('#reloadInhumationDT').click( function () { 
 
             $('#inhumationDataTable').DataTable().destroy()
 
             inhumationDataTable = setUpDataTable(
                 '#inhumationDataTable',
-                'Lista de Inhumaciones Mausoleos',
-                [ 0, 1, 2, 3, 4, 5, 6],
+                'Lista de Inhumaciones en Mausoleo',
+                [ 0, 1, 2, 3, 4, 5],
                 [
                     {
-                        targets: [1, 2, 5, 6],
+                        targets: [2, 3],
                         sortable: false
                     }
                 ],
                 [
                     {data: 'id', name: 'id'},
-                    {data: null, render: function ( data, type, row ) {
-                        return agreementList(row.buries)
+                    {data: 'agreement', name: 'agreement', render: function ( data, type, row ) {
+                        return formatStateLabel(row.agreement)
                     }},
-                    {data: 'pavilion.name', name: 'pavilion.name'},
-                    {data: 'name', name: 'name'},
-                    {data: 'location', name: 'location'},
+                    {data: 'buriable.pavilion.name', name: 'buriable.pavilion.name'},
                     {data: null, render: function ( data, type, row ) {
-                        return amountList(row.buries);
+                        return row.buriable.name +' - '+ row.buriable.location
                     }},
-                    {data: null, render: function ( data, type, row ) {
-                        return deceasedList(row.buries)
+                    {data: 'deceased.document_numb', name: 'deceased.document_numb', render: function ( data, type, row ) {
+                        return row.deceased.document_numb +' - '+ row.deceased.names +' '+ row.deceased.surnames
+                    }},
+                    {data: 'amount', name: 'amount', render: function ( data, type, row ) {
+                        return totalAmount(row.amount, row.discount, row.additional)
                     }},
                     {data: 'buttons', orderable: false, className: "text-center btn-actions"},
                 ]
             )
-
             $('#inhumationDataTable').removeClass('no-footer')
         })
 
-        // Filtro Mausoleos por Pabellon
+        // Filtro Mausoleo por Pabellon
         $('#pavilionFilter').empty()
 
         getPavilions('#pavilionFilter', 'M')
@@ -172,27 +172,28 @@
 
             inhumationDataTable = setUpDataTable(
                 '#inhumationDataTable',
-                'Lista de Inhumaciones Mausoleos',
-                [ 0, 1, 2, 3, 4, 5, 6],
+                'Lista de Inhumaciones en Mausoleo',
+                [ 0, 1, 2, 3, 4, 5],
                 [
                     {
-                        targets: [1, 2, 5, 6],
+                        targets: [2, 3],
                         sortable: false
                     }
                 ],
                 [
                     {data: 'id', name: 'id'},
-                    {data: null, render: function ( data, type, row ) {
-                        return agreementList(row.buries)
+                    {data: 'agreement', name: 'agreement', render: function ( data, type, row ) {
+                        return formatStateLabel(row.agreement)
                     }},
-                    {data: 'pavilion.name', name: 'pavilion.name'},
-                    {data: 'name', name: 'name'},
-                    {data: 'location', name: 'location'},
+                    {data: 'buriable.pavilion.name', name: 'buriable.pavilion.name'},
                     {data: null, render: function ( data, type, row ) {
-                        return amountList(row.buries);
+                        return row.buriable.name +' - '+ row.buriable.location
                     }},
-                    {data: null, render: function ( data, type, row ) {
-                        return deceasedList(row.buries)
+                    {data: 'deceased.document_numb', name: 'deceased.document_numb', render: function ( data, type, row ) {
+                        return row.deceased.document_numb +' - '+ row.deceased.names +' '+ row.deceased.surnames
+                    }},
+                    {data: 'amount', name: 'amount', render: function ( data, type, row ) {
+                        return totalAmount(row.amount, row.discount, row.additional)
                     }},
                     {data: 'buttons', orderable: false, className: "text-center btn-actions"},
                 ],
@@ -229,7 +230,8 @@
                     url: "{{ url('mausoleum') }}" + '/' + id,
                     success: function(data) {
                         // console.log(data)
-                        $('#newAmount').val(data.price / data.size)
+                        let price = data.price / data.size
+                        $('#newMausoleumPrice').val(price.toFixed(2))
                     },
                     error: function(xhr, status) {
                         console.log(xhr.responseJSON.message)
@@ -248,9 +250,7 @@
         /*************************************************************************/
         $('#inhumationDataTable tbody').on('click', '#editInhumationBtn', function () {
             let data = inhumationDataTable.row($(this).parents('tr')).data()
-
-            genInhumationsRadioInputs('#inhumations', data.buries)
-
+            
             $('#editMausoleum').empty()
             $('#editDeceased').empty()
             $('#editRelative').empty()
@@ -259,27 +259,11 @@
             getDeceaseds('#editDeceased')
             getRelatives('#editRelative')
 
-            selectMausoleum('#editMausoleum', data)
+            selectMausoleum('#editMausoleum', data.buriable)
+            selectDeceased('#editDeceased', data.deceased)
+            selectRelative('#editRelative', data.relative)
 
-            $('#choiceInhumationModal').modal('show')
-
-            $('input[type="radio"]').click( function() {
-
-                let radioValue = $('input[name="inhumation"]:checked').val()
-                
-                if (radioValue) {
-
-                    // console.log(data.buries[radioValue])
-
-                    var bury = data.buries[radioValue]
-
-                    selectDeceased('#editDeceased', bury.deceased)
-                    selectRelative('#editRelative', bury.relative)
-
-                    setUpFormModal('#updateInhumationForm', '#updateInhumationModal', 'show', bury)
-
-                }
-            })
+            setUpFormModal('#updateInhumationForm', '#updateInhumationModal', 'show', data)
 
             $('#editMausoleum').on('select2:select', function (event) {
                 // console.log(data)
@@ -291,7 +275,8 @@
                     url: "{{ url('mausoleum') }}" + '/' + id,
                     success: function(data) {
                         // console.log(data)
-                        $('#editAmount').val(data.price / data.size)
+                        let price = data.price / data.size
+                        $('#editMausoleumPrice').val(price.toFixed(2))
                     },
                     error: function(xhr, status) {
                         console.log(xhr.responseJSON.message)
@@ -308,7 +293,6 @@
                 '#updateInhumationModal',
                 inhumationDataTable
             )
-            $('#choiceInhumationModal').modal('hide')
         })
 
         /**************************************************************************/
@@ -316,25 +300,7 @@
         /**************************************************************************/
         $('#inhumationDataTable tbody').on('click', '#deleteInhumationBtn', function (){
             let data = inhumationDataTable.row($(this).parents('tr')).data()
-
-            genInhumationsRadioInputs('#inhumations', data.buries)
-            $('#choiceInhumationModal').modal('show')
-
-            $('input[type="radio"]').click( function() {
-
-                let radioValue = $('input[name="inhumation"]:checked').val()
-                let index = +radioValue + 1
-
-                if (radioValue) {
-                    // console.log(data.buries[radioValue])
-
-                    var bury = data.buries[radioValue]
-
-                    $('p').text('#'+ index +' '+ data.pavilion.name +' - '+ data.name +' '+ data.location)
-                    setUpFormModal('#deleteInhumationForm', '#deleteInhumationModal', 'show')
-                    $('#delete').val(bury.id)
-                }
-            })
+            setUpFormModal('#deleteInhumationForm', '#deleteInhumationModal', 'show', data)
         })
 
         $('#deleteInhumationForm').submit( function (event) {
@@ -345,7 +311,6 @@
                 '#deleteInhumationModal',
                 inhumationDataTable
             )
-            $('#choiceInhumationModal').modal('hide')
         })
     })
 
@@ -403,7 +368,7 @@
                     text: '<i class="fa fa-th-list"></i> Columnas'
                 }
             ],
-            dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+            dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'><'col-md-6 col-sm-12'>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
         })
 
         return dataTable
@@ -415,14 +380,16 @@
 
         if (data) {
             // console.log(data)
-
             $('#update').val(data.id)
-
+            $('#delete').val(data.id)
+            
             $('#ric').val(data.ric)
             $('#notes').val(data.notes)
             $('#discount').val(data.discount)
             $('#additional').val(data.additional)
-            $('#editAmount').val(data.amount)
+
+            let price = data.buriable.price / (data.buriable.size + data.buriable.extensions)
+            $('#editMausoleumPrice').val(price.toFixed(2))
 
             switch (data.agreement) {
                 case 'Compra':
@@ -441,6 +408,8 @@
                     document.getElementById('agreement').selectedIndex = '0'
                     break;
             }
+
+            $('p').text(data.buriable.name +' - '+ data.deceased.document_numb +' - '+ data.deceased.names +' '+ data.deceased.surnames)
         }
 
         $(modal).modal(behavior)
@@ -483,7 +452,13 @@
                 // console.log(data)
                 setUpFormModal(form, modal, 'hide')
 
-                dataTable.ajax.reload()
+                let row = $('#inhumationDataTable').dataTable().fnFindCellRowIndexes(id, 0)
+
+                dataTable.cell(row, 1).data(formatStateLabel(data.agreement)).draw(false)
+                dataTable.cell(row, 2).data(data.buriable.pavilion.name).draw(false)
+                dataTable.cell(row, 3).data(data.buriable.name +' - '+ data.buriable.location).draw(false)
+                dataTable.cell(row, 4).data(data.deceased.document_numb +' - '+ data.deceased.names +' '+ data.deceased.surnames).draw(false)
+                dataTable.cell(row, 5).data(data.amount).draw(false)
 
                 toastrMessage('info', 'Inhumación Actualizada')
                 loading('#actualizar', 'stop')
@@ -508,7 +483,8 @@
                 //console.log(data)
                 setUpFormModal(form, modal, 'hide')
 
-                dataTable.ajax.reload()
+                let row = $('#inhumationDataTable').dataTable().fnFindCellRowIndexes(id, 0)
+                dataTable.row(row).remove().draw()
 
                 toastrMessage('warning', 'Inhumación Eliminada')
                 loading('#eliminar', 'stop')
@@ -520,10 +496,6 @@
             }
         })
     }
-
-    /*
-     * Extra Functions
-     */
 
     function formatStateLabel(state) {
 
@@ -547,64 +519,8 @@
     }
 
     function totalAmount(amount, discount, additional) {
-        return (parseFloat(amount) + parseFloat(additional)) - parseFloat(discount)
-    }
-
-    function amountList(buries) {
-
-        let amounts = []
-
-        $.each(buries, function(index, value){
-            amounts.push('<li>'+ totalAmount(value.amount, value.discount, value.additional) +'</li><br>')
-        })
-
-        let list =  '<ol>'+ amounts +'</ol>'
-        
-        return list.replace(/,/g, '')
-    }
-
-    function deceasedList(buries) {
-
-        let deceaseds = []
-
-        $.each(buries, function(index, value){
-            deceaseds.push('<li>'+ value.deceased.names +'</li>')
-        })
-
-        let list =  '<ol>'+ deceaseds +'</ol>'
-         
-        return list.replace(/,/g, '')
-    }
-
-    function agreementList(buries) {
-
-        let agreements = []
-
-        $.each(buries, function(index, value){
-            agreements.push('<li>'+ formatStateLabel(value.agreement) +'</li><br>')
-        })
-
-        let list =  '<ol>'+ agreements +'</ol>'
-        
-        return list.replace(/,/g, '')
-    }
-
-    function genInhumationsRadioInputs(obj, buries) {
-
-        $(obj).empty()
-
-        $.each(buries, function(index, bury){
-            // console.log(bury)
-            let numb = index + 1
-            let radioInput = $(
-                '<label class="mt-radio">' +
-                    '<input data-toggle="modal" type="radio" name="inhumation" value="'+ index +'">'+
-                    'Inhumación #'+ numb +
-                    '<span></span>' +
-                '</label>'
-            )
-            radioInput.appendTo(obj)
-        })
+        let total = (parseFloat(amount) + parseFloat(additional)) - parseFloat(discount)
+        return total.toFixed(2)
     }
 
     /*

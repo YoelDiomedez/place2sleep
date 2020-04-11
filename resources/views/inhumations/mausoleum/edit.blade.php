@@ -1,7 +1,7 @@
 @component('inhumations.components.editmodal')
     <div class="modal-header text-center">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Actualizar Inhumación Mausoleo</h4>
+        <h4 class="modal-title">Actualizar Inhumación en Mausoleo</h4>
     </div>
     <div class="modal-body">
         <input type="hidden" name="update" id="update">
@@ -66,7 +66,7 @@
                     <label class="bold">Monto Parcial (S/)</label>
                     <input 
                         type="number" 
-                        id="editAmount" 
+                        id="editMausoleumPrice" 
                         class="form-control" 
                         step="0.01"
                         min="0"
