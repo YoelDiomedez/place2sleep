@@ -18,7 +18,7 @@ class CreateExhumationsTable extends Migration
             $table->unsignedBigInteger('inhumation_id'); 
             $table->string('ric')->comment('Registro de Ingreso a Caja');
             $table->string('doc')->comment('Documento de Referencia');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->timestamps();
             $table->foreign('inhumation_id')->references('id')->on('inhumations')->onDelete('cascade');
         });

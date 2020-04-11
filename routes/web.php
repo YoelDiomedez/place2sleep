@@ -47,6 +47,24 @@ Route::apiResource('mausoleums/inhumation', 'InhumationMausoleumController')->na
 
 ])->except(['show']);
 
+Route::apiResource('niches/exhumation', 'ExhumationNicheController')->names([
+    
+    'index'   => 'niche.exhumation.index',
+    'store'   => 'niche.exhumation.store',
+    'update'  => 'niche.exhumation.update',
+    'destroy' => 'niche.exhumation.destroy'
+
+])->except(['show']);
+
+Route::apiResource('mausoleums/exhumation', 'ExhumationMausoleumController')->names([
+    
+    'index'   => 'mausoleum.exhumation.index',
+    'store'   => 'mausoleum.exhumation.store',
+    'update'  => 'mausoleum.exhumation.update',
+    'destroy' => 'mausoleum.exhumation.destroy'
+
+])->except(['show']);
+
 Route::prefix('api')->group( function () {
 
     Route::get('pavilion', 'PavilionController@get');

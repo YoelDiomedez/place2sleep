@@ -39,35 +39,42 @@
             </li>
 
             <li class="nav-item
-                {{ 
-                    request()->is('niches/inhumation') ||
-                    request()->is('mausoleums/inhumation')
+                {{    
+                    request()->is('cemetery') ||
+                    request()->is('deceased') ||
+                    request()->is('relative')  
                     ? 'active open' : '' 
                 }}">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="fa fa-inbox"></i>
-                    <span class="title">Inhumaciones</span>
+                    <i class="fa fa-newspaper-o"></i>
+                    <span class="title">Administración</span>
                     <span class="arrow 
-                    {{  
-                        request()->is('niches/inhumation') ||
-                        request()->is('mausoleums/inhumation')
-                        ? 'open' : '' 
+                    {{   
+                        request()->is('cemetery') ||
+                        request()->is('deceased') ||
+                        request()->is('relative') 
+                         ? 'open' : '' 
                     }}">
                 </a>
-                <ul class="sub-menu">
-                    <li class="nav-item {{ request()->is('niches/inhumation') ? 'active' : '' }}">
-                        <a href="{{ route('niche.inhumation.index') }}" class="nav-link">
-                            <span class="title">Nicho</span>
+                <ul class="sub-menu">            
+                    <li class="nav-item {{ request()->is('deceased') ? 'active open' : '' }}">
+                        <a href="{{ route('deceased.index') }}" class="nav-link">
+                            <span class="title">Difuntos</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ request()->is('mausoleums/inhumation') ? 'active' : '' }}">
-                        <a href="{{ route('mausoleum.inhumation.index') }}" class="nav-link">
-                            <span class="title">Mausoleo</span>
+                    <li class="nav-item {{ request()->is('relative') ? 'active open' : '' }}">
+                        <a href="{{ route('relative.index') }}" class="nav-link">
+                            <span class="title">Familiares</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->is('cemetery') ? 'active open' : '' }}">
+                        <a href="{{ route('cemetery.index') }}" class="nav-link">
+                            <span class="title">Cementerios</span>
                         </a>
                     </li>
                 </ul>
             </li>
-
+            
             <li class="nav-item
                 {{    
                     request()->is('niche')     ||
@@ -104,39 +111,62 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="nav-item
-                {{    
-                    request()->is('cemetery') ||
-                    request()->is('deceased') ||
-                    request()->is('relative')  
+                {{ 
+                    request()->is('niches/inhumation') ||
+                    request()->is('mausoleums/inhumation')
                     ? 'active open' : '' 
                 }}">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="fa fa-newspaper-o"></i>
-                    <span class="title">Administración</span>
+                    <i class="fa fa-folder"></i>
+                    <span class="title">Inhumaciones</span>
                     <span class="arrow 
-                    {{   
-                        request()->is('cemetery') ||
-                        request()->is('deceased') ||
-                        request()->is('relative') 
-                         ? 'open' : '' 
+                    {{  
+                        request()->is('niches/inhumation') ||
+                        request()->is('mausoleums/inhumation')
+                        ? 'open' : '' 
                     }}">
                 </a>
-                <ul class="sub-menu">            
-                    <li class="nav-item {{ request()->is('deceased') ? 'active open' : '' }}">
-                        <a href="{{ route('deceased.index') }}" class="nav-link">
-                            <span class="title">Difuntos</span>
+                <ul class="sub-menu">
+                    <li class="nav-item {{ request()->is('niches/inhumation') ? 'active' : '' }}">
+                        <a href="{{ route('niche.inhumation.index') }}" class="nav-link">
+                            <span class="title">Nicho</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ request()->is('relative') ? 'active open' : '' }}">
-                        <a href="{{ route('relative.index') }}" class="nav-link">
-                            <span class="title">Familiares</span>
+                    <li class="nav-item {{ request()->is('mausoleums/inhumation') ? 'active' : '' }}">
+                        <a href="{{ route('mausoleum.inhumation.index') }}" class="nav-link">
+                            <span class="title">Mausoleo</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ request()->is('cemetery') ? 'active open' : '' }}">
-                        <a href="{{ route('cemetery.index') }}" class="nav-link">
-                            <span class="title">Cementerios</span>
+                </ul>
+            </li>
+
+            <li class="nav-item
+                {{ 
+                    request()->is('niches/exhumation') ||
+                    request()->is('mausoleums/exhumation')
+                    ? 'active open' : '' 
+                }}">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-folder-open"></i>
+                    <span class="title">Exhumaciones</span>
+                    <span class="arrow 
+                    {{  
+                        request()->is('niches/exhumation') ||
+                        request()->is('mausoleums/exhumation')
+                        ? 'open' : '' 
+                    }}">
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item {{ request()->is('niches/exhumation') ? 'active' : '' }}">
+                        <a href="{{ route('niche.exhumation.index') }}" class="nav-link">
+                            <span class="title">Nicho</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->is('mausoleums/exhumation') ? 'active' : '' }}">
+                        <a href="{{ route('mausoleum.exhumation.index') }}" class="nav-link">
+                            <span class="title">Mausoleo</span>
                         </a>
                     </li>
                 </ul>

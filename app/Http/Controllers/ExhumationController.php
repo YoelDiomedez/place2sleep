@@ -8,26 +8,6 @@ use Illuminate\Http\Request;
 class ExhumationController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -35,29 +15,16 @@ class ExhumationController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $exhumation = new Exhumation;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Exhumation  $exhumation
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Exhumation $exhumation)
-    {
-        //
-    }
+        $exhumation->inhumation_id = $request->inhumation_id;
+        $exhumation->ric           = $request->ric;
+        $exhumation->doc           = $request->doc;
+        $exhumation->notes         = $request->notes;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Exhumation  $exhumation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Exhumation $exhumation)
-    {
-        //
+        $exhumation->save();
+
+        return $exhumation;
     }
 
     /**
@@ -69,7 +36,13 @@ class ExhumationController extends Controller
      */
     public function update(Request $request, Exhumation $exhumation)
     {
-        //
+        $exhumation->ric           = $request->ric;
+        $exhumation->doc           = $request->doc;
+        $exhumation->notes         = $request->notes;
+
+        $exhumation->update();
+
+        return $exhumation->load(['inhumation.buriable.pavilion', 'inhumation.deceased']);
     }
 
     /**
@@ -80,6 +53,8 @@ class ExhumationController extends Controller
      */
     public function destroy(Exhumation $exhumation)
     {
-        //
+        $exhumation->delete();
+
+        return $exhumation;
     }
 }
