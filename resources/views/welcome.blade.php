@@ -85,8 +85,10 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://keenthemes.com/preview/metronic/theme/admin_2" target="_blank">Docs</a>
-                    <a href="https://github.com/YoelDiomedez/metronic" target="_blank">GitHub</a>
+                    <div class="links">
+                        <a href="https://yoeldiomedez.github.io/" target="_blank">Author</a>
+                        <a href="https://github.com/YoelDiomedez/place2sleep" target="_blank">GitHub</a>
+                    </div>
                 </div>
             </div>
         </div>
