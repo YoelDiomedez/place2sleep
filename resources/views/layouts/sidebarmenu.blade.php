@@ -21,7 +21,7 @@
             ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="fa fa-laptop"></i>
-                    <span class="title">Dashboard</span>
+                    <span class="title">Escritorio</span>
                     <span class="arrow 
                         {{   
                             request()->is('home')
@@ -32,7 +32,7 @@
                 <ul class="sub-menu">
                     <li class="nav-item start {{ request()->is('home') ? 'active open' : '' }}">
                         <a href="{{ route('home') }}" class="nav-link ">
-                            <span class="title">Inicio</span>
+                            <span class="title">Dasboard</span>
                         </a>
                     </li>
                 </ul>
@@ -119,7 +119,7 @@
                     ? 'active open' : '' 
                 }}">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="fa fa-folder"></i>
+                    <i class="fa fa-archive"></i>
                     <span class="title">Inhumaciones</span>
                     <span class="arrow 
                     {{  
@@ -149,7 +149,7 @@
                     ? 'active open' : '' 
                 }}">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="fa fa-folder-open"></i>
+                    <i class="fa fa-inbox"></i>
                     <span class="title">Exhumaciones</span>
                     <span class="arrow 
                     {{  

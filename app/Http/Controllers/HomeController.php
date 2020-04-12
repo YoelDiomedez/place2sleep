@@ -23,7 +23,35 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $pavilions = \App\Pavilion::where('cemetery_id', auth()->user()->cemetery_id)->count();
+
+        $niches = \App\Inhumation::whereHasMorph('buriable', \App\Niche::class, function ($niches) {
+                $niches->where( function ($niche) {
+                    $niche->WhereHas('pavilion', function ($pavilions) {
+                        $pavilions->where('cemetery_id', auth()->user()->cemetery_id);
+                    });
+                });
+            })->count();
+
+        $mausoleums = \App\Inhumation::whereHasMorph('buriable', \App\Mausoleum::class, function ($mausoleums) {
+                $mausoleums->where( function ($mausoleum) {
+                    $mausoleum->WhereHas('pavilion', function ($pavilions) {
+                        $pavilions->where('cemetery_id', auth()->user()->cemetery_id);
+                    });
+                });
+            })->count();
+
+        $exhumations = \App\Exhumation::whereHas('inhumation', function ($inhumations) {
+            $inhumations->whereHasMorph('buriable', '*', function ($query) {
+                $query->where( function ($q) {
+                    $q->WhereHas('pavilion', function ($pavilions) {
+                        $pavilions->where('cemetery_id', auth()->user()->cemetery_id);
+                    });
+                });
+            });
+        })->count();
+
+        return view('home', compact('pavilions', 'niches', 'mausoleums', 'exhumations'));
     }
 
     /**
