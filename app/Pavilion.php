@@ -19,4 +19,9 @@ class Pavilion extends Model
         
         return 'Mausoleo'; 
     }
+    
+    public function cemetery()
+    {
+        return $this->belongsTo(Cemetery::class);
+    }
 }

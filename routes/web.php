@@ -21,6 +21,10 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('permissio
 Route::get('/choice', 'HomeController@choice')->name('choice');
 Route::get('/select/{id}', 'HomeController@select')->name('select');
 
+Route::get('search', 'SearchController@index')->name('search');
+Route::get('search/niche', 'SearchController@niche');
+Route::get('search/mausoleum', 'SearchController@mausoleum');
+
 Route::middleware(['auth'])->group( function () {
 
     Route::apiResource('cemetery', 'CemeteryController')->except(['show'])->middleware('permission:cemetery');

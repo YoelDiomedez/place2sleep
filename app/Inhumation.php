@@ -54,4 +54,9 @@ class Inhumation extends Model
     {
         return $this->buriable->pavilion;
     }
+    
+    public function cemetery()
+    {
+        return $this->pavilion->cemetery;
+    }
 }
