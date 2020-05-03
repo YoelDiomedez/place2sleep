@@ -63,10 +63,10 @@
         </a>
     </div>
     
-    <div class="create-account">
+    <div class="create-account bg-dark">
         @if (Route::has('register'))
         <p>
-            <a href="{{ route('register') }}" class="uppercase">
+            <a href="{{ route('register') }}" class="uppercase bg-font-dark">
                 Crea una cuenta
             </a>
         </p>

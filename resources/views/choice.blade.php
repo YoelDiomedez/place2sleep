@@ -23,7 +23,7 @@
                 </div>
             </div>
             <h3>
-                <i class="fa fa-sitemap"></i> Cementerios a cargo
+                <i class="fa fa-sitemap"></i> Cementerios
             </h3>
             <div class="row">
                 <div class="table-responsive">

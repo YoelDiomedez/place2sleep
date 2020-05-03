@@ -37,19 +37,19 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END HEAD -->
     <body class="login">
         <!-- BEGIN LOGO -->
-        <div class="logo">
+        <div style="text-align: center;">
             <a href="{{ url('/') }}">
-                <img src="{{ asset('img/logo-big.png') }}" alt="" /> 
+                <img src="{{ asset('img/place2sleep-logo.png') }}" alt="" /> 
             </a>
         </div>
         <!-- END LOGO -->
         <!-- BEGIN LOGIN -->
-        <div class="content">
+        <div class="content" style="margin-top: 0px;">
 
             @yield('content')
             
         </div>
-        <div class="copyright"> 
+        <div class="copyright font-white"> 
             © {{ date('Y') }} Yoel Diomedez Apps
         </div>
         <!--[if lt IE 9]>
@@ -58,6 +58,22 @@ License: You must have a valid license purchased only from themeforest(the above
         <![endif]-->
         <!-- BEGIN CORE THEME GLOBAL SCRIPTS -->
         <script src="{{ asset('js/auth.js') }}"></script>
+        <script>
+            $(document).ready( function () {
+                $.backstretch(
+                    [
+                        "{{ asset('img/background/1.jpg') }}", 
+                        "{{ asset('img/background/2.jpg') }}", 
+                        "{{ asset('img/background/3.jpg') }}", 
+                        "{{ asset('img/background/4.jpg') }}"
+                    ],
+                    {
+                        fade: 1e3,
+                        duration: 8e3
+                    }
+                )
+            })
+        </script>
         <!-- END CORE THEME GLOBAL SCRIPTS -->
         @stack('scripts')
     </body>

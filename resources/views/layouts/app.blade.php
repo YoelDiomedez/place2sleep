@@ -43,7 +43,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
                     <a href="{{ url('/') }}">
-                        <img src="{{ asset('img/logo-default.png') }}" alt="logo" class="logo-default" /> 
+                        <img src="{{ asset('img/place2sleep-logo-2.png') }}" alt="logo" class="logo-default" style="margin: 15px 0 0;"/> 
                     </a>
                     <div class="menu-toggler sidebar-toggler">
                         <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->

@@ -31,7 +31,8 @@ mix.styles([
         'public/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js',
         'public/assets/global/plugins/jquery.blockui.min.js',
         'public/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js',
-        'public/assets/global/scripts/app.min.js'
+        'public/assets/global/scripts/app.min.js',
+        'public/assets/global/plugins/backstretch/jquery.backstretch.min.js'
     ], 'public/js/auth.js');
 
 // App Layout
