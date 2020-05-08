@@ -32,7 +32,7 @@ Place 2 Sleep - Sistema para la Administración de Cementerios
 # Dependency Installation
   composer install
   npm install
-  npm run dev (optional)
+  npm run dev
   
 # .env File Set Up
   DB_DATABASE=yourdatabasename
