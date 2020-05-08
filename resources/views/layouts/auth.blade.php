@@ -37,7 +37,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END HEAD -->
     <body class="login">
         <!-- BEGIN LOGO -->
-        <div style="text-align: center;">
+        <div class="text-center">
             <a href="{{ url('/') }}">
                 <img src="{{ asset('img/place2sleep-logo.png') }}" alt="" /> 
             </a>

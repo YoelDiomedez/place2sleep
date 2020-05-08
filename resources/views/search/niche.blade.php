@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row justify-content-center">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <div class="alert alert-info text-justify">
                                 <i class="fa fa-info-circle"></i> 
                                 Ingrese el <b>Número DNI</b> del <b>inhumado</b> para una búsqueda especifíca.
@@ -87,10 +87,10 @@
             $('div.toolbar').html(
                 '<ul class="nav d-flex justify-content-center justify-content-md-start">'+
                     '<li class="nav-item">'+
-                        '<a class="nav-link" href="{{ url("search/niche") }}"><i class="fa fa-th"></i> Nicho</a>'+
+                        '<a class="nav-link active" href="{{ url("search/niche") }}"><i class="fa fa-th"></i> Nicho</a>'+
                     '</li>'+
                     '<li class="nav-item">'+
-                        '<a class="nav-link disabled" href="{{ url("search/mausoleum") }}"><i class="fa fa-bank"></i> Mausoleo</a>'+
+                        '<a class="nav-link" href="{{ url("search/mausoleum") }}"><i class="fa fa-bank"></i> Mausoleo</a>'+
                    '</li>'+
                 '</ul>'
             );
